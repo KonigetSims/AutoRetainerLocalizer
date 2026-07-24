@@ -19,27 +19,27 @@ class Program
         }
 
         string sourcePath = Path.Combine(rootPath, "AutoRetainer", "AutoRetainer", "UI");
-        string dictPath = Path.Combine(rootPath, "zh-TW.json");
+        string dictPath = Path.Combine(rootPath, "zh-CN.json");
 
-        Console.WriteLine($"[資訊] 當前工作目錄: {Environment.CurrentDirectory}");
-        Console.WriteLine($"[資訊] 預計源碼路徑: {sourcePath}");
+        Console.WriteLine($"[信息] 当前工作目录: {Environment.CurrentDirectory}");
+        Console.WriteLine($"[信息] 预计源码路径: {sourcePath}");
 
         if (!Directory.Exists(sourcePath))
         {
-            Console.WriteLine($"[錯誤] 找不到 AutoRetainer 資料夾！");
+            Console.WriteLine($"[错误] 找不到 AutoRetainer 文件夹！");
             return;
         }
 
-        // 讀取現有的字典
+        // 读取现有的字典
         var dictionary = File.Exists(dictPath)
             ? JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(dictPath))
             : new Dictionary<string, string>();
 
         var files = Directory.GetFiles(sourcePath, "*.cs", SearchOption.AllDirectories);
-        Console.WriteLine($"找到 {files.Length} 個檔案，準備開始掃描...");
+        Console.WriteLine($"找到 {files.Length} 个文件，准备开始扫描...");
 
-        // 1: 建立一個持久的 rewriter 實例
-        // 這樣 MissingTranslations 可以在處理所有檔案時持續累積
+        // 1: 建立一个持久的 rewriter 实例
+        // 这样 MissingTranslations 可以在处理所有文件时持续累积
         var rewriter = new TranslationRewriter(dictionary ?? new(), dictPath);
 
         foreach (var file in files)
@@ -48,7 +48,7 @@ class Program
             SyntaxTree tree = CSharpSyntaxTree.ParseText(code);
             var root = tree.GetRoot();
 
-            // 2: 使用同一個 rewriter 進行 Visit
+            // 2: 使用同一个 rewriter 进行 Visit
             var result = rewriter.Visit(root);
 
             if (result != root)
@@ -58,10 +58,10 @@ class Program
             }
         }
 
-        // 3: 處理完所有檔案後，一次性寫入未翻譯字串
-        Console.WriteLine("正在檢查是否有新發現的字串需寫入字典...");
+        // 3: 处理完所有文件后，一次性写入未翻译字符串
+        Console.WriteLine("正在检查是否有新发现的字符串需写入字典...");
         rewriter.SaveMissingTranslations();
 
-        Console.WriteLine("中文化處理與字典更新完成！");
+        Console.WriteLine("中文化处理与字典更新完成！");
     }
 }

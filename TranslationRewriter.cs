@@ -17,7 +17,7 @@ namespace Localizer
     {
         private readonly Dictionary<string, string> _dictionary;
         private readonly string _jsonPath;
-        // 使用 HashSet 確保單次運行中，同一個新字串只會被記錄一次
+        // 使用 HashSet 确保单次运行中，同一个新字符串只会被记录一次
         public HashSet<string> MissingTranslations { get; } = new HashSet<string>();
 
         private readonly string[] _uiKeywords = { "Text", "Button", "Label", "Combo", "Header", "Section", "Tooltip", "MenuItem", "Checkbox", "Help", "Notify", "Info", "FormatToken", "InputInt", "Widget", "EnumCombo" };
@@ -25,11 +25,11 @@ namespace Localizer
             "PushID", "GetConfig", "Log", "Debug", "Print", "ExecuteCommand", 
             "ToString", "GetField", "GetProperty", "SetFilter", "Tag", "GetTag", 
             "InternalName", "Database", "HasTag", "AddTag", "Find",
-            // 遊戲引擎內部識別碼，不可翻譯
+            // 游戏引擎内部识别码，不可翻译
             "TryGetAddonByName", "GetAddonByName",
-            // ImGui 內部 ID，不可翻譯
+            // ImGui 内部 ID，不可翻译
             "OpenPopup", "BeginPopup", "PushStyleColor", "PushStyleVar",
-            // 命令與路由
+            // 命令与路由
             "ProcessCommand", "GetIpcProvider", "GetIpcSubscriber"
         };
         public TranslationRewriter(Dictionary<string, string> dictionary, string jsonPath)
@@ -38,7 +38,7 @@ namespace Localizer
             _jsonPath = jsonPath;
         }
 
-        // --- 核心翻譯與記錄邏輯 ---
+        // --- 核心翻译与记录逻辑 ---
 
         private bool TryGetTranslation(string original, out string translated)
         {
@@ -48,7 +48,7 @@ namespace Localizer
                 return false;
             }
 
-            // 嘗試三種匹配模式
+            // 尝试三种匹配模式
             if (_dictionary.TryGetValue(original, out translated) ||
                 _dictionary.TryGetValue(original.Trim(), out translated) ||
                 _dictionary.TryGetValue(NormalizeKey(original), out translated))
@@ -56,7 +56,7 @@ namespace Localizer
                 return true;
             }
 
-            // 若找不到翻譯，記錄到缺失清單
+            // 若找不到翻译，记录到缺失列表
             if (!_dictionary.ContainsKey(original))
             {
                 MissingTranslations.Add(original);
@@ -65,7 +65,7 @@ namespace Localizer
         }
 
         /// <summary>
-        /// 將所有新發現的字串寫回 JSON 檔案
+        /// 将所有新发现的字符串写回 JSON 文件
         /// </summary>
         public void SaveMissingTranslations()
         {
@@ -89,7 +89,7 @@ namespace Localizer
                 {
                     if (json[key] == null)
                     {
-                        // 預設將 Value 設為 Key，方便後續搜尋與翻譯
+                        // 默认将 Value 设为 Key，方便后续搜索与翻译
                         json[key] = key;
                         added = true;
                     }
@@ -97,18 +97,18 @@ namespace Localizer
 
                 if (added)
                 {
-                    // 使用 Indented 格式讓 JSON 易於閱讀
+                    // 使用 Indented 格式让 JSON 易于阅读
                     File.WriteAllText(_jsonPath, json.ToString(Formatting.Indented), Encoding.UTF8);
-                    Console.WriteLine($"[INFO] 已將 {MissingTranslations.Count} 個新字串寫入 {_jsonPath}");
+                    Console.WriteLine($"[INFO] 已将 {MissingTranslations.Count} 个新字符串写入 {_jsonPath}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"[ERROR] 儲存 JSON 時發生錯誤: {ex.Message}");
+                Console.WriteLine($"[ERROR] 存储 JSON 时发生错误: {ex.Message}");
             }
         }
 
-        // --- Roslyn 節點訪問覆寫 ---
+        // --- Roslyn 节点访问覆写 ---
 
         public override SyntaxNode VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax node)
         {
@@ -158,7 +158,7 @@ namespace Localizer
             return base.VisitLiteralExpression(node);
         }
 
-        // --- 輔助判斷方法 ---
+        // --- 辅助判断方法 ---
 
         private bool ShouldTranslate(SyntaxNode node, string text)
         {
@@ -173,7 +173,7 @@ namespace Localizer
                 if (_uiKeywords.Any(k => methodName.Contains(k))) return true;
             }
 
-            // 檢查方法定義名稱
+            // 检查方法定义名称
             var methodDecl = node.Ancestors().OfType<MethodDeclarationSyntax>().FirstOrDefault();
             if (methodDecl != null)
             {
@@ -185,7 +185,7 @@ namespace Localizer
                 }
             }
 
-            // 檢查屬性名稱
+            // 检查属性名称
             var property = node.Ancestors().OfType<PropertyDeclarationSyntax>().FirstOrDefault();
             if (property != null)
             {
@@ -198,10 +198,10 @@ namespace Localizer
 
         private bool IsHumanText(string text)
         {
-            string clean = text.Trim(' ', '\n', '\r', '\"', '\\', 't', '#', '_'); // 增加過濾符號
-            if (clean.Length <= 1) return false; // 太短的通常是代號或符號        
-            if (char.IsLower(clean[0])) return false; // 過濾字首小寫
-            // 判斷是否含有字母或中文字元
+            string clean = text.Trim(' ', '\n', '\r', '\"', '\\', 't', '#', '_'); // 增加过滤符号
+            if (clean.Length <= 1) return false; // 太短的通常是代号或符号        
+            if (char.IsLower(clean[0])) return false; // 过滤字首小写
+            // 判断是否含有字母或中文字符
             return clean.Any(c => char.IsLetter(c) || char.GetUnicodeCategory(c) == System.Globalization.UnicodeCategory.OtherLetter);
             
         }
@@ -285,8 +285,8 @@ namespace Localizer
                 node.StringStartToken,
                 SyntaxFactory.List(contents),
                 node.StringEndToken)
-                .WithLeadingTrivia(node.GetLeadingTrivia())   // 前導空格
-                .WithTrailingTrivia(node.GetTrailingTrivia()); // 後繼空格
+                .WithLeadingTrivia(node.GetLeadingTrivia())   // 前导空格
+                .WithTrailingTrivia(node.GetTrailingTrivia()); // 后继空格
         }
     }
 }
