@@ -6,11 +6,11 @@ namespace AutoRetainer.UI.NeoUI.MultiModeEntries;
 
 public class MultiModeDisableRender : NeoUIEntry
 {
-    public override string Path => "Multi Mode/Disable Render";
+    public override string Path => "多角色模式/禁用渲染";
 
     public override NuiBuilder Builder => new NuiBuilder()
-        .Section("Disable Render")
-        .Checkbox("Disable Render when in Multi Mode", () => ref C.MultiDisableRender, "Disables world rendering while in Multi Mode.")
-        .Checkbox("Only when in Night Mode", () => ref C.MultiDisableRenderNightModeOnly)
-        .Checkbox("Only when window is not active", () => ref C.MultiDisableRenderOnlyInactive);
+        .Section("禁用渲染")
+        .Checkbox("多角色模式下禁用渲染", () => ref C.MultiDisableRender, "多角色模式下不再渲染游戏世界，以降低资源占用")
+        .Checkbox("仅在夜间模式启用", () => ref C.MultiDisableRenderNightModeOnly)
+        .Checkbox("仅在游戏窗口非活动时", () => ref C.MultiDisableRenderOnlyInactive);
 }

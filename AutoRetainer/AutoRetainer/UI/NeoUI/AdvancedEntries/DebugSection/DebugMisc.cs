@@ -20,13 +20,13 @@ internal unsafe class DebugMisc : DebugSectionBase
 {
     public override void Draw()
     {
-        ImGui.Checkbox("RenderDisable verbose log", ref RenderDisableManager.Debug);
-        if(ImGui.Button("Execute plugin terminator"))
+        ImGui.Checkbox("渲染禁用详细记录", ref RenderDisableManager.Debug);
+        if(ImGui.Button("执行插件终止器"))
         {
             S.PluginTerminator.OnUpdate();
         }
         ImGuiEx.Text($"OfflineSubmarineData.Count {Data.OfflineSubmarineData.Count}, NumSubSlots {Data.NumSubSlots}");
-        ImGuiEx.Text($"FC Rank: {Utils.FCRank}");
+        ImGuiEx.Text($"部队等级: {Utils.FCRank}");
         if(ImGui.CollapsingHeader("ApiTest1"))
         {
             try
@@ -45,17 +45,17 @@ internal unsafe class DebugMisc : DebugSectionBase
         if(ImGui.CollapsingHeader("AskEligibility"))
         {
             ImGuiEx.Text($"""
-                當前角色：\n已派遣僱員探險：{Data?.SentVenturesByDay.Sum(x => x.Value)}\n已派遣潛艇航行：{Data?.SentVoyagesByDay.Sum(x => x.Value)}\n啟用的僱員上限：{Data?.GetEnabledRetainers(false).Length}\n總計已派遣探險：{C.OfflineData.Sum(x => x.SentVenturesByDay.Select(x => x.Value).Sum())}\n總計已派遣航行：{C.OfflineData.Sum(x => x.SentVoyagesByDay.Select(x => x.Value).Sum())}\n全局啟用的僱員總量：{C.OfflineData.Select(x => x.GetEnabledRetainers().Length).MaxSafe()}\n已啟用僱員自動化的角色數：{C.OfflineData.Where(x => x.GetEnabledRetainers().Length > 0 && x.Enabled).Count()}\n已啟用潛艇自動化的角色數：{C.OfflineData.Where(x => x.GetEnabledVesselsData(Internal.VoyageType.Submersible).Count > 0 && x.WorkshopEnabled).Count()}\n---------\n按日期統計:
+                当前角色：\n已派遣雇员探险：{Data?.SentVenturesByDay.Sum(x => x.Value)}\n已派遣潜艇航行：{Data?.SentVoyagesByDay.Sum(x => x.Value)}\n启用的雇员上限：{Data?.GetEnabledRetainers(false).Length}\n总计已派遣探险：{C.OfflineData.Sum(x => x.SentVenturesByDay.Select(x => x.Value).Sum())}\n总计已派遣航行：{C.OfflineData.Sum(x => x.SentVoyagesByDay.Select(x => x.Value).Sum())}\n全局启用的雇员总量：{C.OfflineData.Select(x => x.GetEnabledRetainers().Length).MaxSafe()}\n已启用雇员自动化的角色数：{C.OfflineData.Where(x => x.GetEnabledRetainers().Length > 0 && x.Enabled).Count()}\n已启用潜艇自动化的角色数：{C.OfflineData.Where(x => x.GetEnabledVesselsData(Internal.VoyageType.Submersible).Count > 0 && x.WorkshopEnabled).Count()}\n---------\n按日期统计:
                 """);
             var days = C.OfflineData.Select(x => (long[])[..x.SentVenturesByDay.Keys, ..x.SentVoyagesByDay.Keys]).SelectNested(x => x).ToHashSet();
             ImGui.Indent();
             foreach(var x in days)
             {
-                ImGuiEx.Text($"{x}: 探險次數: {C.OfflineData.Select(c => c.SentVenturesByDay.SafeSelect(x)).Sum()}, 航行次數: {C.OfflineData.Select(c => c.SentVoyagesByDay.SafeSelect(x)).Sum()}");
+                ImGuiEx.Text($"{x}: 探险次数: {C.OfflineData.Select(c => c.SentVenturesByDay.SafeSelect(x)).Sum()}, 航行次数: {C.OfflineData.Select(c => c.SentVoyagesByDay.SafeSelect(x)).Sum()}");
             }
             ImGui.Unindent();
             ImGuiEx.Text($"""
-                ---------\n按角色統計:
+                ---------\n按角色统计:
                 """);
             foreach(var x in C.OfflineData)
             {
