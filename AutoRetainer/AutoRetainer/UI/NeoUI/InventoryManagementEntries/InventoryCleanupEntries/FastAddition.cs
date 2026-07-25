@@ -16,17 +16,17 @@ public unsafe class FastAddition : InventoryManagementBase
         .Widget(() =>
         {
             var selectedSettings = InventoryCleanupCommon.SelectedPlan;
-            ImGuiEx.TextWrapped(GradientColor.Get(EColor.RedBright, EColor.YellowBright), $"當此文字可見時，將滑鼠懸停在物品上並按住按鍵:");
-            ImGuiEx.Text(!ImGui.GetIO().KeyShift ? ImGuiColors.DalamudGrey : ImGuiColors.DalamudRed, $"Shift - 添加至快速僱員販售清單");
-            ImGuiEx.Text($"* 已在「無條件出售」及「丟棄」清單內的物品不會添加至快速僱員販售清單");
-            ImGuiEx.Text(!ImGui.GetIO().KeyCtrl ? ImGuiColors.DalamudGrey : ImGuiColors.DalamudRed, $"Ctrl - 添加至無條件出售清單");
-            ImGuiEx.Text($"* 物品將會從其他清單「移至」無條件出售清單");
-            ImGuiEx.Text(!IsKeyPressed(Keys.Tab) ? ImGuiColors.DalamudGrey : ImGuiColors.DalamudRed, $"Tab - 添加至丟棄清單");
-            ImGuiEx.Text($"* 物品將會從其他清單「移至」丟棄清單");
+            ImGuiEx.TextWrapped(GradientColor.Get(EColor.RedBright, EColor.YellowBright), $"当此文字可见时，将鼠标悬停在物品上并按住按键:");
+            ImGuiEx.Text(!ImGui.GetIO().KeyShift ? ImGuiColors.DalamudGrey : ImGuiColors.DalamudRed, $"Shift - 添加至快速雇员出售列表");
+            ImGuiEx.Text($"* 已在「无条件出售」及「丢弃」列表内的物品不会添加至快速雇员出售列表");
+            ImGuiEx.Text(!ImGui.GetIO().KeyCtrl ? ImGuiColors.DalamudGrey : ImGuiColors.DalamudRed, $"Ctrl - 添加至无条件出售列表");
+            ImGuiEx.Text($"* 物品将会从其他列表「移至」无条件出售列表");
+            ImGuiEx.Text(!IsKeyPressed(Keys.Tab) ? ImGuiColors.DalamudGrey : ImGuiColors.DalamudRed, $"Tab - 添加至丢弃列表");
+            ImGuiEx.Text($"* 物品将会从其他列表「移至」丢弃列表");
             //ImGuiEx.Text(IsKeyPressed(Keys.Space) ? ImGuiColors.DalamudGrey : ImGuiColors.DalamudRed, $"Space - add to Desynthesis List");
             //ImGuiEx.Text($"* Items that already in other lists WILL BE MOVED to Desynthesis List");
-            ImGuiEx.Text(!ImGui.GetIO().KeyAlt ? ImGuiColors.DalamudGrey : ImGuiColors.DalamudRed, $"Alt - 從任何清單中刪除");
-            ImGuiEx.Text("受保護的物品不受此操作影響");
+            ImGuiEx.Text(!ImGui.GetIO().KeyAlt ? ImGuiColors.DalamudGrey : ImGuiColors.DalamudRed, $"Alt - 从任何列表中删除");
+            ImGuiEx.Text("受保护的物品不受此操作影响");
             if(Svc.GameGui.HoveredItem > 0)
             {
                 var id = (uint)(Svc.GameGui.HoveredItem % 1000000);
@@ -93,10 +93,10 @@ public unsafe class FastAddition : InventoryManagementBase
                 }*/
                 if(ImGui.GetIO().KeyAlt)
                 {
-                    if(selectedSettings.IMAutoVendorSoft.Remove(id)) Notify.Info($"移除 {ExcelItemHelper.GetName(id)} 從快速僱員販售清單");
-                    if(selectedSettings.IMAutoVendorHard.Remove(id)) Notify.Info($"移除 {ExcelItemHelper.GetName(id)} 從無條件出售清單");
-                    if(selectedSettings.IMDiscardList.Remove(id)) Notify.Info($"移除 {ExcelItemHelper.GetName(id)} 從丟棄清單");
-                    if(selectedSettings.IMDesynth.Remove(id)) Notify.Info($"移除 {ExcelItemHelper.GetName(id)} 從分解清單");
+                    if(selectedSettings.IMAutoVendorSoft.Remove(id)) Notify.Info($"已将 {ExcelItemHelper.GetName(id)} 从快速雇员出售列表移除");
+                    if(selectedSettings.IMAutoVendorHard.Remove(id)) Notify.Info($"已将 {ExcelItemHelper.GetName(id)} 从无条件出售列表移除");
+                    if(selectedSettings.IMDiscardList.Remove(id)) Notify.Info($"已将 {ExcelItemHelper.GetName(id)} 从丢弃列表移除");
+                    if(selectedSettings.IMDesynth.Remove(id)) Notify.Info($"已将 {ExcelItemHelper.GetName(id)} 从分解列表移除");
                 }
             }
         });

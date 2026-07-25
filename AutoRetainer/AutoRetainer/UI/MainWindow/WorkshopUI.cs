@@ -43,7 +43,7 @@ internal static unsafe class WorkshopUI
         UIUtils.DrawSearch();
         foreach(var data in sortedData.Where(x => x.OfflineAirshipData.Count + x.OfflineSubmarineData.Count > 0 && !x.ExcludeWorkshop))
         {
-            var search = Ref<string>.Get("搜尋角色");
+            var search = Ref<string>.Get("搜索角色");
             if(search != "" && !$"{data.Name}@{data.World}".Contains(search, StringComparison.OrdinalIgnoreCase)) continue;
             ImGui.PushID($"Player{data.CID}");
             var rCurPos = ImGui.GetCursorPos();
@@ -51,14 +51,14 @@ internal static unsafe class WorkshopUI
             ImGui.PushFont(UiBuilder.IconFont);
             ImGuiEx.ButtonCheckbox($"##{data.CID}", ref data.WorkshopEnabled, 0xFF097000);
             ImGui.PopFont();
-            ImGuiEx.Tooltip($"在此角色啟用多角色模式下的潛水艇自動化");
-            ImGuiEx.DragDropRepopulate("工作坊資料重整", data.WorkshopEnabled, ref data.WorkshopEnabled);
+            ImGuiEx.Tooltip($"在此角色启用多角色模式下的潜水艇自动化");
+            ImGuiEx.DragDropRepopulate("工坊数据重整", data.WorkshopEnabled, ref data.WorkshopEnabled);
             ImGui.SameLine(0, 3);
             if(ImGuiEx.IconButton(FontAwesomeIcon.DoorOpen))
             {
                 if(MultiMode.Relog(data, out var error, RelogReason.ConfigGUI))
                 {
-                    Notify.Success("正在重新登入...");
+                    Notify.Success("正在重新登录...");
                 }
                 else
                 {
@@ -84,7 +84,7 @@ internal static unsafe class WorkshopUI
                 ImGui.PushFont(UiBuilder.IconFont);
                 ImGuiEx.TextV(ImGuiColors.DalamudYellow, "");
                 ImGui.PopFont();
-                ImGuiEx.Tooltip($"你可以建造新的潛水艇 ({data.GetVesselData(VoyageType.Submersible).Count}/{data.NumSubSlots})");
+                ImGuiEx.Tooltip($"你可以建造新的潜水艇 ({data.GetVesselData(VoyageType.Submersible).Count}/{data.NumSubSlots})");
                 ImGui.SameLine(0, 3);
             }
 
@@ -93,7 +93,7 @@ internal static unsafe class WorkshopUI
                 ImGui.PushFont(UiBuilder.IconFont);
                 ImGuiEx.TextV(ImGuiColors.DalamudOrange, "");
                 ImGui.PopFont();
-                ImGuiEx.Tooltip($"部分潛水艇未啟用自動化");
+                ImGuiEx.Tooltip($"部分潜水艇未启用自动化");
                 ImGui.SameLine(0, 3);
             }
 
@@ -102,7 +102,7 @@ internal static unsafe class WorkshopUI
                 ImGui.PushFont(UiBuilder.IconFont);
                 ImGuiEx.TextV(ImGuiColors.DalamudOrange, "");
                 ImGui.PopFont();
-                ImGuiEx.Tooltip($"部分潛水艇目前未在航行中");
+                ImGuiEx.Tooltip($"部分潜水艇目前未在航行中");
                 ImGui.SameLine(0, 3);
             }
 
@@ -111,7 +111,7 @@ internal static unsafe class WorkshopUI
                 ImGui.PushFont(UiBuilder.IconFont);
                 ImGuiEx.TextV(ImGuiColors.DalamudOrange, "");
                 ImGui.PopFont();
-                ImGuiEx.Tooltip($"發現未優化的配置");
+                ImGuiEx.Tooltip($"发现未优化的配置");
                 ImGui.SameLine(0, 3);
             }
 
@@ -120,7 +120,7 @@ internal static unsafe class WorkshopUI
                 ImGui.PushFont(UiBuilder.IconFont);
                 ImGuiEx.TextV(ImGuiColors.DalamudRed, FontAwesomeIcon.ArrowsSpin.ToIconString());
                 ImGui.PopFont();
-                ImGuiEx.Tooltip($"重新派遣已啟用，但部分解鎖計畫被設為強制執行");
+                ImGuiEx.Tooltip($"重新派遣已启用，但部分解锁计划被设为强制执行");
                 ImGui.SameLine(0, 3);
             }
 
@@ -131,7 +131,7 @@ internal static unsafe class WorkshopUI
                     ImGui.PushFont(UiBuilder.IconFont);
                     ImGuiEx.TextV("");
                     ImGui.PopFont();
-                    ImGuiEx.Tooltip($"已全域啟用等待所有遠航探索功能");
+                    ImGuiEx.Tooltip($"已全局启用等待所有远航探索功能");
                     ImGui.SameLine(0, 3);
                 }
                 else if(data.MultiWaitForAllDeployables)
@@ -139,7 +139,7 @@ internal static unsafe class WorkshopUI
                     ImGui.PushFont(UiBuilder.IconFont);
                     ImGuiEx.TextV("");
                     ImGui.PopFont();
-                    ImGuiEx.Tooltip($"已為此角色啟用等待所有遠航探索功能");
+                    ImGuiEx.Tooltip($"已为此角色启用等待所有远航探索功能");
                     ImGui.SameLine(0, 3);
                 }
             }
@@ -191,14 +191,14 @@ internal static unsafe class WorkshopUI
         UIUtils.DrawOverlayTexts(overlayTexts, ref StatusTextWidth);
         Bars.RemoveAll(x => x.frame != Svc.PluginInterface.UiBuilder.FrameCount);
 
-        ImGuiEx.LineCentered("WorkshopUI planner button", () =>
+        ImGuiEx.LineCentered("工坊UI规划器按钮", () =>
         {
-            if(ImGui.Button("開啟航線規劃器"))
+            if(ImGui.Button("打开航线规划器"))
             {
                 P.SubmarinePointPlanUI.IsOpen = true;
             }
             ImGui.SameLine();
-            if(ImGui.Button("開啟航線解鎖規劃器"))
+            if(ImGui.Button("打开航线解锁规划器"))
             {
                 P.SubmarineUnlockPlanUI.IsOpen = true;
             }
@@ -206,7 +206,7 @@ internal static unsafe class WorkshopUI
 
         if(C.Verbose)
         {
-            if(ImGui.CollapsingHeader("Public debug"))
+            if(ImGui.CollapsingHeader("公开调试"))
             {
                 try
                 {
@@ -216,23 +216,23 @@ internal static unsafe class WorkshopUI
                         {
                             TaskDeployOnPreviousVoyage.Enqueue();
                         }*/
-                        if(ImGui.Button("選擇最佳航線"))
+                        if(ImGui.Button("选择最佳航线"))
                         {
                             TaskCalculateAndPickBestExpRoute.Enqueue();
                         }
-                        if(ImGui.Button("選擇最佳航線；包含 1 個解鎖點"))
+                        if(ImGui.Button("选择最佳航线；包含 1 个解锁点"))
                         {
                             TaskCalculateAndPickBestExpRoute.Enqueue(VoyageUtils.GetSubmarineUnlockPlanByGuid(Data.GetAdditionalVesselData(GenericHelpers.Read(CurrentSubmarine.Get()->Name), VoyageType.Submersible).SelectedUnlockPlan) ?? new());
                         }
-                        if(ImGui.Button("選擇解鎖路徑 (最多 5 個點)"))
+                        if(ImGui.Button("选择解锁路径 (最多 5 个点)"))
                         {
                             TaskDeployOnUnlockRoute.EnqueuePickOrCalc(VoyageUtils.GetSubmarineUnlockPlanByGuid(Data.GetAdditionalVesselData(GenericHelpers.Read(CurrentSubmarine.Get()->Name), VoyageType.Submersible).SelectedUnlockPlan) ?? new(), UnlockMode.MultiSelect);
                         }
-                        if(ImGui.Button("選擇解鎖路徑 (僅 1 個點)"))
+                        if(ImGui.Button("选择解锁路径 (仅 1 个点)"))
                         {
                             TaskDeployOnUnlockRoute.EnqueuePickOrCalc(VoyageUtils.GetSubmarineUnlockPlanByGuid(Data.GetAdditionalVesselData(GenericHelpers.Read(CurrentSubmarine.Get()->Name), VoyageType.Submersible).SelectedUnlockPlan) ?? new(), UnlockMode.SpamOne);
                         }
-                        if(ImGui.Button("選擇點對點規劃航線"))
+                        if(ImGui.Button("选择点对点规划航线"))
                         {
                             var plan = VoyageUtils.GetSubmarinePointPlanByGuid(Data.GetAdditionalVesselData(GenericHelpers.Read(CurrentSubmarine.Get()->Name), VoyageType.Submersible).SelectedPointPlan);
                             if(plan != null)
@@ -241,12 +241,12 @@ internal static unsafe class WorkshopUI
                             }
                             else
                             {
-                                DuoLog.Error($"未選擇任何計畫!");
+                                DuoLog.Error($"未选择任何计划!");
                             }
                         }
                         foreach(var x in Data.OfflineSubmarineData)
                         {
-                            if(ImGui.Button($"修理 {x.Name} 艘潛水艇的損壞配件"))
+                            if(ImGui.Button($"修理 {x.Name} 艘潜水艇的损坏配件"))
                             {
                                 if(VoyageUtils.GetCurrentWorkshopPanelType() == PanelType.Submersible)
                                 {
@@ -256,16 +256,16 @@ internal static unsafe class WorkshopUI
                                 }
                                 else
                                 {
-                                    Notify.Error("你目前不在潛水艇選單中");
+                                    Notify.Error("你目前不在潜水艇菜单中");
                                 }
                             }
                         }
-                        if(ImGui.Button("靠近傳喚鈴"))
+                        if(ImGui.Button("靠近召唤铃"))
                         {
                             TaskInteractWithNearestBell.Enqueue(false);
                         }
 
-                        if(ImGui.Button("靠近管制面板"))
+                        if(ImGui.Button("靠近控制面板"))
                         {
                             TaskInteractWithNearestPanel.Enqueue(false);
                         }
@@ -280,7 +280,7 @@ internal static unsafe class WorkshopUI
                     }
                     else
                     {
-                        ImGuiEx.Text(EColor.RedBright, $"當前正在執行: {P.TaskManager.CurrentTask?.Name}");
+                        ImGuiEx.Text(EColor.RedBright, $"当前正在执行: {P.TaskManager.CurrentTask?.Name}");
                     }
                 }
                 catch(Exception e)
@@ -309,8 +309,8 @@ internal static unsafe class WorkshopUI
         ImGui.SetCursorPos(storePos);
         if(ImGui.BeginTable("##retainertable", 4, ImGuiTableFlags.SizingFixedFit | ImGuiTableFlags.Borders))
         {
-            ImGui.TableSetupColumn("名稱", ImGuiTableColumnFlags.WidthStretch);
-            ImGui.TableSetupColumn("結構");
+            ImGui.TableSetupColumn("名称", ImGuiTableColumnFlags.WidthStretch);
+            ImGui.TableSetupColumn("结构");
             ImGui.TableSetupColumn("航次");
             ImGui.TableSetupColumn("");
             ImGui.TableHeadersRow();
@@ -403,7 +403,7 @@ internal static unsafe class WorkshopUI
         }
         void repop()
         {
-            ImGuiEx.DragDropRepopulateClass("修復潛艇配置", adata, x =>
+            ImGuiEx.DragDropRepopulateClass("修复潜艇配置", adata, x =>
             {
                 adata.VesselBehavior = x.VesselBehavior;
                 if(adata.VesselBehavior == VesselBehavior.Use_plan)
@@ -420,7 +420,7 @@ internal static unsafe class WorkshopUI
         if(adata.IndexOverride > 0)
         {
             ImGui.SameLine();
-            ImGuiEx.Text(ImGuiColors.DalamudGrey3, $"索引值覆蓋: {adata.IndexOverride}");
+            ImGuiEx.Text(ImGuiColors.DalamudGrey3, $"索引值覆盖: {adata.IndexOverride}");
         }
         var end = ImGui.GetCursorPos();
         var p = vessel.GetRemainingSeconds() / (60f * 60f * 24f);
@@ -449,7 +449,7 @@ internal static unsafe class WorkshopUI
 
         if(vessel.ReturnTime == 0)
         {
-            ImGuiEx.Text($"無航次");
+            ImGuiEx.Text($"无航次");
         }
         else
         {
@@ -479,32 +479,32 @@ internal static unsafe class WorkshopUI
         }
         ImGui.TableNextColumn();
         ImGui.TableSetBgColor(ImGuiTableBgTarget.CellBg, 0);
-        var n = $"{data.CID} {vessel.Name} settings";
+        var n = $"{data.CID} {vessel.Name} 设置";
         if(ImGuiEx.IconButton(FontAwesomeIcon.Cogs, $"{data.CID} {vessel.Name}"))
         {
             ImGui.OpenPopup(n);
         }
         if(ImGuiEx.BeginPopupNextToElement(n))
         {
-            ImGui.CollapsingHeader($"{vessel.Name} - {Censor.Character(data.Name)} Configuration  ##conf", ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.Bullet | ImGuiTreeNodeFlags.OpenOnArrow);
-            ImGuiEx.Text($"潛艇行為:");
+            ImGui.CollapsingHeader($"{vessel.Name} - {Censor.Character(data.Name)} 配置  ##conf", ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.Bullet | ImGuiTreeNodeFlags.OpenOnArrow);
+            ImGuiEx.Text($"潜艇行为:");
             ImGuiEx.EnumCombo("##vbeh", ref adata.VesselBehavior);
             if(adata.VesselBehavior == VesselBehavior.Unlock)
             {
-                ImGuiEx.Text($"解鎖模式:");
+                ImGuiEx.Text($"解锁模式:");
                 ImGuiEx.EnumCombo("##umode", ref adata.UnlockMode, Lang.UnlockModeNames);
                 var currentPlan = VoyageUtils.GetSubmarineUnlockPlanByGuid(adata.SelectedUnlockPlan) ?? VoyageUtils.GetDefaultSubmarineUnlockPlan(false);
                 var isDefault = VoyageUtils.GetSubmarineUnlockPlanByGuid(adata.SelectedUnlockPlan) == null;
-                var text = Environment.TickCount64 % 2000 > 1000 ? "解鎖所有地點" : "未選擇計畫或計畫未知";
-                if(ImGui.BeginCombo("##uplan", (currentPlan?.Name ?? text) + (isDefault ? " (default)" : ""), ImGuiComboFlags.HeightLarge))
+                var text = Environment.TickCount64 % 2000 > 1000 ? "解锁所有地点" : "未选择计划或计划未知";
+                if(ImGui.BeginCombo("##uplan", (currentPlan?.Name ?? text) + (isDefault ? " (默认)" : ""), ImGuiComboFlags.HeightLarge))
                 {
-                    if(ImGui.Button("開啟編輯器"))
+                    if(ImGui.Button("打开编辑器"))
                     {
                         P.SubmarineUnlockPlanUI.IsOpen = true;
                         P.SubmarineUnlockPlanUI.SelectedPlanGuid = adata.SelectedUnlockPlan;
                     }
                     ImGui.SameLine();
-                    if(ImGui.Button("清除計畫"))
+                    if(ImGui.Button("清除计划"))
                     {
                         adata.SelectedUnlockPlan = Guid.Empty.ToString();
                     }
@@ -523,13 +523,13 @@ internal static unsafe class WorkshopUI
                 var currentPlan = VoyageUtils.GetSubmarinePointPlanByGuid(adata.SelectedPointPlan);
                 if(ImGui.BeginCombo("##uplan", currentPlan.GetPointPlanName(), ImGuiComboFlags.HeightLarge))
                 {
-                    if(ImGui.Button("開啟編輯器"))
+                    if(ImGui.Button("打开编辑器"))
                     {
                         P.SubmarinePointPlanUI.IsOpen = true;
                         P.SubmarinePointPlanUI.SelectedPlanGuid = adata.SelectedPointPlan;
                     }
                     ImGui.SameLine();
-                    if(ImGui.Button("清除計畫"))
+                    if(ImGui.Button("清除计划"))
                     {
                         adata.SelectedPointPlan = Guid.Empty.ToString();
                     }
@@ -545,11 +545,11 @@ internal static unsafe class WorkshopUI
             }
             ImGui.Separator();
             ImGuiEx.SetNextItemWidthScaled(150f);
-            ImGuiEx.SliderInt("索引值覆蓋", ref adata.IndexOverride, 0, 4, adata.IndexOverride == 0 ? "禁用" : $"{adata.IndexOverride}");
-            ImGuiComponents.HelpMarker($"如果 AutoRetainer 中的潛艇順序與遊戲內航行面板選單不同，你必須使用此功能為排序錯誤的潛艇設定正確的索引值。請確保索引與控制面板的順序一致。");
-            if(ImGui.CollapsingHeader("我最近重新命名了這艘潛艇"))
+            ImGuiEx.SliderInt("索引值覆盖", ref adata.IndexOverride, 0, 4, adata.IndexOverride == 0 ? "禁用" : $"{adata.IndexOverride}");
+            ImGuiComponents.HelpMarker($"如果 AutoRetainer 中的潜艇顺序与游戏内航行面板菜单不同，你必须使用此功能为排序错误的潜艇设置正确的索引值。请确保索引与控制面板的顺序一致。");
+            if(ImGui.CollapsingHeader("我最近重新命名了这艘潜艇"))
             {
-                if(ImGui.BeginCombo("##selprev", "選擇更名前的潛艇名稱", ImGuiComboFlags.HeightLarge))
+                if(ImGui.BeginCombo("##selprev", "选择更名前的潜艇名称", ImGuiComboFlags.HeightLarge))
                 {
                     var datas = ((Func<Dictionary<string, AdditionalVesselData>>)delegate
                     {
@@ -570,7 +570,7 @@ internal static unsafe class WorkshopUI
                                 var toDelete = x.Key;
                                 datas[copyTo] = x.Value;
                                 datas.Remove(toDelete);
-                                Notify.Success($"已將數據從 {toDelete} 移動到 {copyTo}");
+                                Notify.Success($"已将数据从 {toDelete} 移动到 {copyTo}");
                             });
                         }
                         if(d) ImGui.EndDisabled();
@@ -580,10 +580,10 @@ internal static unsafe class WorkshopUI
             }
             if(C.Verbose)
             {
-                if(ImGui.Button("模擬就緒")) vessel.ReturnTime = (uint)P.Time;
-                if(ImGui.Button("偽造就緒+")) vessel.ReturnTime += 60u * (ImGui.GetIO().KeyCtrl ? 10u : 1u) * (ImGui.GetIO().KeyShift ? 10u : 1u);
-                if(ImGui.Button("偽造就緒-")) vessel.ReturnTime -= 60u * (ImGui.GetIO().KeyCtrl ? 10u : 1u) * (ImGui.GetIO().KeyShift ? 10u : 1u);
-                if(ImGui.Button("偽造未就緒")) vessel.ReturnTime = (uint)(P.Time + 9999);
+                if(ImGui.Button("模拟就绪")) vessel.ReturnTime = (uint)P.Time;
+                if(ImGui.Button("伪造就绪+")) vessel.ReturnTime += 60u * (ImGui.GetIO().KeyCtrl ? 10u : 1u) * (ImGui.GetIO().KeyShift ? 10u : 1u);
+                if(ImGui.Button("伪造就绪-")) vessel.ReturnTime -= 60u * (ImGui.GetIO().KeyCtrl ? 10u : 1u) * (ImGui.GetIO().KeyShift ? 10u : 1u);
+                if(ImGui.Button("伪造未就绪")) vessel.ReturnTime = (uint)(P.Time + 9999);
             }
             ImGui.EndPopup();
         }

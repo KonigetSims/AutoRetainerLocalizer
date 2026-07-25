@@ -8,9 +8,9 @@ public unsafe class DebugAddonMaster : DebugSectionBase
 {
     public override void Draw()
     {
-        if(ImGui.CollapsingHeader("RestainerList"))
+        if(ImGui.CollapsingHeader("雇员列表"))
         {
-            if(TryGetAddonByName<AtkUnitBase>("RetainerList", out var addon) && IsAddonReady(addon))
+            if(TryGetAddonByName<AtkUnitBase>("雇员列表", out var addon) && IsAddonReady(addon))
             {
                 var r = new AddonMaster.RetainerList(addon);
                 foreach(var x in r.Retainers)
@@ -24,18 +24,18 @@ public unsafe class DebugAddonMaster : DebugSectionBase
             }
         }
 
-        if(ImGui.CollapsingHeader("_TitleMenu"))
+        if(ImGui.CollapsingHeader("标题菜单"))
         {
             if(TryGetAddonMaster<AddonMaster._TitleMenu>(out var m) && m.IsAddonReady)
             {
-                ImGuiEx.Text($"Ready: {m.IsReady}");
-                if(ImGui.Button("Start")) m.Start();
-                if(ImGui.Button("DataCenter")) m.DataCenter();
-                if(ImGui.Button("Exit")) m.Exit();
+                ImGuiEx.Text($"就绪: {m.IsReady}");
+                if(ImGui.Button("开始")) m.Start();
+                if(ImGui.Button("数据中心")) m.DataCenter();
+                if(ImGui.Button("退出")) m.Exit();
             }
         }
 
-        if(ImGui.CollapsingHeader("TitleDCWorldMap"))
+        if(ImGui.CollapsingHeader("标题数据中心世界地图"))
         {
             if(TryGetAddonMaster<AddonMaster.TitleDCWorldMap>(out var m) && m.IsAddonReady)
             {
@@ -49,7 +49,7 @@ public unsafe class DebugAddonMaster : DebugSectionBase
             }
         }
 
-        if(ImGui.CollapsingHeader("_CharaSelectWorldServer"))
+        if(ImGui.CollapsingHeader("角色选择世界服务器"))
         {
             if(TryGetAddonMaster<AddonMaster._CharaSelectWorldServer>(out var m))
             {
@@ -63,11 +63,11 @@ public unsafe class DebugAddonMaster : DebugSectionBase
             }
         }
 
-        if(ImGui.CollapsingHeader("_CharaSelectListMenu"))
+        if(ImGui.CollapsingHeader("角色选择列表菜单"))
         {
             if(TryGetAddonMaster<AddonMaster._CharaSelectListMenu>(out var m) && m.IsAddonReady)
             {
-                if(ImGui.Button("World##w"))
+                if(ImGui.Button("世界##w"))
                 {
                     m.SelectWorld();
                 }
@@ -92,7 +92,7 @@ public unsafe class DebugAddonMaster : DebugSectionBase
                     }
                     if(x.IsSelected)
                     {
-                        ImGuiEx.Text($"Selected");
+                        ImGuiEx.Text($"已选择");
                     }
                 }
             }

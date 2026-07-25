@@ -8,15 +8,15 @@ internal class DebugNMAPI : DebugSectionBase
     private static string path = "";
     public override void Draw()
     {
-        ImGuiEx.Text($"Active: {P.NotificationMasterApi.IsIPCReady()}");
-        ImGui.InputText("path", ref path, 500);
+        ImGuiEx.Text($"激活: {P.NotificationMasterApi.IsIPCReady()}");
+        ImGui.InputText("路径", ref path, 500);
         ImGui.InputFloat("vol", ref vol);
-        ImGui.Checkbox("repeat", ref repeat);
-        ImGui.Checkbox("stopOnFocus", ref stopOnFocus);
-        if(ImGui.Button("Flash")) new TickScheduler(() => P.NotificationMasterApi.FlashTaskbarIcon(), 1000);
-        if(ImGui.Button("msg")) new TickScheduler(() => P.NotificationMasterApi.DisplayTrayNotification("Title", "Text"), 1000);
-        if(ImGui.Button("msg no title")) new TickScheduler(() => P.NotificationMasterApi.DisplayTrayNotification("Text"), 1000);
-        if(ImGui.Button("play sound")) new TickScheduler(() => P.NotificationMasterApi.PlaySound(path, vol, repeat, stopOnFocus), 1000);
-        if(ImGui.Button("stop sound")) P.NotificationMasterApi.StopSound();
+        ImGui.Checkbox("重复", ref repeat);
+        ImGui.Checkbox("获得焦点时停止", ref stopOnFocus);
+        if(ImGui.Button("闪烁")) new TickScheduler(() => P.NotificationMasterApi.FlashTaskbarIcon(), 1000);
+        if(ImGui.Button("消息")) new TickScheduler(() => P.NotificationMasterApi.DisplayTrayNotification("标题", "文本"), 1000);
+        if(ImGui.Button("无标题消息")) new TickScheduler(() => P.NotificationMasterApi.DisplayTrayNotification("文本"), 1000);
+        if(ImGui.Button("播放声音")) new TickScheduler(() => P.NotificationMasterApi.PlaySound(path, vol, repeat, stopOnFocus), 1000);
+        if(ImGui.Button("停止声音")) P.NotificationMasterApi.StopSound();
     }
 }

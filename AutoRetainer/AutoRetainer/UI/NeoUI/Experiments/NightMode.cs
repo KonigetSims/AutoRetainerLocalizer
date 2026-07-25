@@ -2,21 +2,21 @@ namespace AutoRetainer.UI.NeoUI.Experiments;
 
 internal class NightMode : ExperimentUIEntry
 {
-    public override string Name => "夜間模式";
+    public override string Name => "夜间模式";
     public override void Draw()
     {
-        ImGuiEx.TextWrapped($"夜間模式:\n" +
-                $"- 在登入畫面等待選項將被強制啟用\n" +
-                $"- 將強制執行內建的 FPS 限制器規範\n" +
-                $"- 當視窗未聚焦且在等待時，遊戲將限制在 0.2 FPS\n" +
-                $"- 遊戲看起來可能會像當機，但在你重新激活遊戲視窗後，請給它最多 5 秒的時間恢復運作。\n" +
-                $"- 預設情況下，夜間模式僅啟用潛艇自動化\n" +
-                $"- 停用夜間模式後，救援管理器 (Bailout manager) 會啟動並帶領你重新登入遊戲。");
-        if(ImGui.Checkbox("啟用夜間模式", ref C.NightMode)) MultiMode.BailoutNightMode();
-        ImGui.Checkbox("顯示夜間模式勾選框", ref C.ShowNightMode);
-        ImGui.Checkbox("在夜間模式下處理僱員", ref C.NightModeRetainers);
-        ImGui.Checkbox("在夜間模式下處理派遣", ref C.NightModeDeployables);
-        ImGui.Checkbox("使夜間模式狀態持久化", ref C.NightModePersistent);
-        ImGui.Checkbox("使關機指令改為啟動夜間模式而非關閉遊戲", ref C.ShutdownMakesNightMode);
+        ImGuiEx.TextWrapped($"夜间模式:\n" +
+                $"- 在登录画面等待选项将被强制启用\n" +
+                $"- 将强制执行内置的 FPS 限制器规范\n" +
+                $"- 当窗口未聚焦且在等待时，游戏将限制在 0.2 FPS\n" +
+                $"- 游戏看起来可能会像死机，但在你重新激活游戏窗口后，请给它最多 5 秒的时间恢复运作。\n" +
+                $"- 默认情况下，夜间模式仅启用潜艇自动化\n" +
+                $"- 禁用夜间模式后，救援管理器 (Bailout manager) 会启动并带领你重新登录游戏。");
+        if(ImGui.Checkbox("启用夜间模式", ref C.NightMode)) MultiMode.BailoutNightMode();
+        ImGui.Checkbox("显示夜间模式勾选框", ref C.ShowNightMode);
+        ImGui.Checkbox("在夜间模式下处理雇员", ref C.NightModeRetainers);
+        ImGui.Checkbox("在夜间模式下处理派遣", ref C.NightModeDeployables);
+        ImGui.Checkbox("使夜间模式状态持久化", ref C.NightModePersistent);
+        ImGui.Checkbox("使关机指令改为启动夜间模式而非关闭游戏", ref C.ShutdownMakesNightMode);
     }
 }

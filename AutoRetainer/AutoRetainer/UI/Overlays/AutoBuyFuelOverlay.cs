@@ -15,19 +15,19 @@ public unsafe class AutoBuyFuelOverlay : Window
 
     public override void Draw()
     {
-        if(TryGetAddonByName<AtkUnitBase>("FreeCompanyCreditShop", out var a) && IsAddonReady(a))
+        if(TryGetAddonByName<AtkUnitBase>("部队积分商店", out var a) && IsAddonReady(a))
         {
             if(a->X != 0 || a->Y != 0)
             {
                 Position = new(a->X, a->Y - Height);
             }
-            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.GasPump, "循環購買青磷水桶", !Utils.IsBusy)) TaskRecursivelyBuyFuel.Enqueue(true);
+            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.GasPump, "循环购买青磷水桶", !Utils.IsBusy)) TaskRecursivelyBuyFuel.Enqueue(true);
         }
         Height = ImGui.GetWindowSize().Y;
     }
 
     public override bool DrawConditions()
     {
-        return VoyageUtils.Workshops.Contains(Svc.ClientState.TerritoryType) && TryGetAddonByName<AtkUnitBase>("FreeCompanyCreditShop", out var a) && IsAddonReady(a);
+        return VoyageUtils.Workshops.Contains(Svc.ClientState.TerritoryType) && TryGetAddonByName<AtkUnitBase>("部队积分商店", out var a) && IsAddonReady(a);
     }
 }

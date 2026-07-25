@@ -16,7 +16,7 @@ using VesselDescriptor = (ulong CID, string VesselName);
 namespace AutoRetainer.UI.NeoUI;
 public class DeployablesTab : NeoUIEntry
 {
-    public override string Path => "遠航探索";
+    public override string Path => "远航探索";
 
     private static int MinLevel = 0;
     private static int MaxLevel = 0;
@@ -29,11 +29,11 @@ public class DeployablesTab : NeoUIEntry
     {
         Builder = new NuiBuilder()
         .Section("一般")
-        .Checkbox($"存取探險控制面板時重新派遣船隻", () => ref C.SubsAutoResend2)
-        .Checkbox($"在重新派遣之前完成所有船隻的結算", () => ref C.FinalizeBeforeResend)
-        .Checkbox($"在派遣介面隱藏飛空艇", () => ref C.HideAirships)
+        .Checkbox($"访问探险控制面板时重新派遣船只", () => ref C.SubsAutoResend2)
+        .Checkbox($"在重新派遣之前完成所有船只的结算", () => ref C.FinalizeBeforeResend)
+        .Checkbox($"在派遣界面隐藏飞空艇", () => ref C.HideAirships)
 
-        .Section("計畫設定")
+        .Section("计划设置")
         .Widget(SubmarineUnlockPlanUI.DrawButtonText, x =>
         {
             SubmarineUnlockPlanUI.DrawButton();
@@ -43,14 +43,14 @@ public class DeployablesTab : NeoUIEntry
             SubmarinePointPlanUI.DrawButton();
         })
 
-        .Section("警報設定")
-        .Checkbox($"啟用的潛艇數量少於可用上限", () => ref C.AlertNotAllEnabled)
-        .Checkbox($"已啟用的潛艇目前未處於航行狀態", () => ref C.AlertNotDeployed)
-        .Widget("潛水艇配置非最佳化警報:", (z) =>
+        .Section("警报设置")
+        .Checkbox($"启用的潜艇数量少于可用上限", () => ref C.AlertNotAllEnabled)
+        .Checkbox($"已启用的潜艇目前未处于航行状态", () => ref C.AlertNotDeployed)
+        .Widget("潜水艇配置非最佳化警报:", (z) =>
         {
             foreach(var x in C.UnoptimalVesselConfigurations)
             {
-                ImGuiEx.Text($"Rank {x.MinRank}-{x.MaxRank}, {(x.ConfigurationsInvert ? "NOT " : "")} {x.Configurations.Print()}");
+                ImGuiEx.Text($"军衔 {x.MinRank}-{x.MaxRank}, {(x.ConfigurationsInvert ? "NOT " : "")} {x.Configurations.Print()}");
                 if(ImGuiEx.HoveredAndClicked("Ctrl+click to delete", default, true))
                 {
                     var t = x.GUID;
@@ -58,7 +58,7 @@ public class DeployablesTab : NeoUIEntry
                 }
             }
 
-            ImGuiEx.TextV($"Rank:");
+            ImGuiEx.TextV($"军衔:");
             ImGui.SameLine();
             ImGuiEx.SetNextItemWidthScaled(60f);
             ImGui.DragInt("##rank1", ref MinLevel, 0.1f);
@@ -67,14 +67,14 @@ public class DeployablesTab : NeoUIEntry
             ImGui.SameLine();
             ImGuiEx.SetNextItemWidthScaled(60f);
             ImGui.DragInt("##rank2", ref MaxLevel, 0.1f);
-            ImGuiEx.TextV($"配置項目:");
+            ImGuiEx.TextV($"配置项目:");
             ImGui.SameLine();
             ImGui.Checkbox($"NOT", ref InvertConf);
             ImGui.SameLine();
             ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - 100f.Scale());
             ImGui.InputText($"##conf", ref Conf, 3000);
             ImGui.SameLine();
-            if(ImGui.Button("Add"))
+            if(ImGui.Button("添加"))
             {
                 C.UnoptimalVesselConfigurations.Add(new()
                 {
@@ -87,16 +87,16 @@ public class DeployablesTab : NeoUIEntry
         })
         .Section("批量修改配置")
         .Widget(MassConfigurationChangeWidget)
-        .Section("註冊、配件與計畫自動化")
+        .Section("注册、配件与计划自动化")
         .Widget(AutomatedSubPlannerWidget)
-        .Section("匯出角色與潛水艇清單至 CSV")
+        .Section("导出角色与潜水艇列表至 CSV")
         .Widget(() =>
         {
-            ImGuiEx.FilteringCheckbox("僅匯出已啟用多角色模式的角色(否則將匯出全部)", out var exportEnabledCharas);
-            ImGuiEx.FilteringCheckbox("僅匯出已啟用的潛水艇(否則將匯出全部)", out var exportEnabledSubs);
-            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.FileExport, "匯出"))
+            ImGuiEx.FilteringCheckbox("仅导出已启用多角色模式的角色(否则将导出全部)", out var exportEnabledCharas);
+            ImGuiEx.FilteringCheckbox("仅导出已启用的潜水艇(否则将导出全部)", out var exportEnabledSubs);
+            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.FileExport, "导出"))
             {
-                string[] headers = ["名稱", "Build (1)", "Build (2)", "Build (3)", "Build (4)", "Level (1)", "Level (2)", "Level (3)", "Level (4)", "Route (1)", "Route (2)", "Route (3)", "Route (4)"];
+                string[] headers = ["名称", "配置 (1)", "配置 (2)", "配置 (3)", "配置 (4)", "等级 (1)", "等级 (2)", "等级 (3)", "等级 (4)", "路线 (1)", "路线 (2)", "路线 (3)", "路线 (4)"];
                 List<string[]> data = [];
                 foreach(var x in C.OfflineData)
                 {
@@ -156,12 +156,12 @@ public class DeployablesTab : NeoUIEntry
 
     private void MassConfigurationChangeWidget()
     {
-        ImGuiEx.Text($"選擇潛水艇:");
+        ImGuiEx.Text($"选择潜水艇:");
         ImGuiEx.SetNextItemFullWidth();
-        if(ImGui.BeginCombo($"##sel", $"已選擇 {SelectedVessels.Count}", ImGuiComboFlags.HeightLarge))
+        if(ImGui.BeginCombo($"##sel", $"已选择 {SelectedVessels.Count}", ImGuiComboFlags.HeightLarge))
         {
             ref var search = ref Ref<string>.Get("Search");
-            ImGui.InputTextWithHint("##searchSubs", "角色搜尋", ref search, 100);
+            ImGui.InputTextWithHint("##searchSubs", "角色搜索", ref search, 100);
             foreach(var x in C.OfflineData)
             {
                 if(x.ExcludeWorkshop) continue;
@@ -181,25 +181,25 @@ public class DeployablesTab : NeoUIEntry
             }
             ImGui.EndCombo();
         }
-        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf057', "取消全選"))
+        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf057', "取消全选"))
         {
             SelectedVessels.Clear();
         }
         ImGui.SameLine();
-        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf055', "全選"))
+        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf055', "全选"))
         {
             SelectedVessels.Clear();
             foreach(var x in C.OfflineData) foreach(var v in x.OfflineSubmarineData) SelectedVessels.Add((x.CID, v.Name));
         }
         ImGui.Separator();
-        ImGuiEx.TextV("按等級:");
+        ImGuiEx.TextV("按等级:");
         ImGui.SameLine();
         ImGui.SetNextItemWidth(100f);
         ImGui.DragInt("##minlevel", ref MassMinLevel, 0.1f);
         ImGui.SameLine();
         ImGui.SetNextItemWidth(100f);
         ImGui.DragInt("##maxlevel", ref MassMaxLevel, 0.1f);
-        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Plus, "將此等級的潛艇加入選擇"))
+        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Plus, "将此等级的潜艇加入选择"))
         {
             foreach(var x in C.OfflineData)
             {
@@ -214,13 +214,13 @@ public class DeployablesTab : NeoUIEntry
             }
         }
         ImGui.Separator();
-        ImGuiEx.Text("執行動作:");
+        ImGuiEx.Text("执行动作:");
 
         ImGui.Separator();
         ImGui.SetNextItemWidth(150f);
         ImGuiEx.EnumCombo("##behavior", ref MassBehavior);
         ImGui.SameLine();
-        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf018', "設定行為模式"))
+        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf018', "设置行为模式"))
         {
             var num = 0;
             foreach(var x in SelectedVessels)
@@ -241,7 +241,7 @@ public class DeployablesTab : NeoUIEntry
         ImGui.SetNextItemWidth(150f);
         ImGuiEx.EnumCombo("##unlockmode", ref MassUnlockMode, Lang.UnlockModeNames);
         ImGui.SameLine();
-        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf09c', "設定解鎖模式"))
+        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf09c', "设置解锁模式"))
         {
             var num = 0;
             foreach(var x in SelectedVessels)
@@ -261,7 +261,7 @@ public class DeployablesTab : NeoUIEntry
         ImGui.Separator();
 
         ImGui.SetNextItemWidth(150f);
-        if(ImGui.BeginCombo("##uplan", "解鎖計畫: " + (SelectedUnlockPlan?.Name ?? "未選擇", ImGuiComboFlags.HeightLarge)))
+        if(ImGui.BeginCombo("##uplan", "解锁计划: " + (SelectedUnlockPlan?.Name ?? "未选择", ImGuiComboFlags.HeightLarge)))
         {
             foreach(var plan in C.SubmarineUnlockPlans)
             {
@@ -273,7 +273,7 @@ public class DeployablesTab : NeoUIEntry
             ImGui.EndCombo();
         }
         ImGui.SameLine();
-        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf3c1', "設定解鎖計畫", SelectedUnlockPlan != null))
+        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf3c1', "设置解锁计划", SelectedUnlockPlan != null))
         {
             var num = 0;
             foreach(var x in SelectedVessels)
@@ -292,7 +292,7 @@ public class DeployablesTab : NeoUIEntry
         ImGui.Separator();
 
         ImGui.SetNextItemWidth(150f);
-        if(ImGui.BeginCombo("##uplan2", "航點計畫: " + (VoyageUtils.GetPointPlanName(SelectedPointPlan) ?? "未選擇"), ImGuiComboFlags.HeightLarge))
+        if(ImGui.BeginCombo("##uplan2", "航点计划: " + (VoyageUtils.GetPointPlanName(SelectedPointPlan) ?? "未选择"), ImGuiComboFlags.HeightLarge))
         {
             foreach(var plan in C.SubmarinePointPlans)
             {
@@ -304,7 +304,7 @@ public class DeployablesTab : NeoUIEntry
             ImGui.EndCombo();
         }
         ImGui.SameLine();
-        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf55b', "設定航點計畫", SelectedPointPlan != null))
+        if(ImGuiEx.IconButtonWithText((FontAwesomeIcon)'\uf55b', "设置航点计划", SelectedPointPlan != null))
         {
             var num = 0;
             foreach(var x in SelectedVessels)
@@ -323,7 +323,7 @@ public class DeployablesTab : NeoUIEntry
 
         ImGui.Separator();
 
-        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Check, "啟用所選的潛水艇"))
+        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Check, "启用所选的潜水艇"))
         {
             var num = 0;
             foreach(var x in SelectedVessels)
@@ -342,7 +342,7 @@ public class DeployablesTab : NeoUIEntry
 
         ImGui.Separator();
 
-        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Times, "停用所選的潛水艇"))
+        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Times, "禁用所选的潜水艇"))
         {
             var num = 0;
             foreach(var x in SelectedVessels)
@@ -361,7 +361,7 @@ public class DeployablesTab : NeoUIEntry
 
         ImGui.Separator();
 
-        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.CheckCircle, "為所選潛水艇的角色啟用多角色模式"))
+        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.CheckCircle, "为所选潜水艇的角色启用多角色模式"))
         {
             var num = 0;
             foreach(var x in SelectedVessels)
@@ -378,7 +378,7 @@ public class DeployablesTab : NeoUIEntry
 
         ImGui.Separator();
 
-        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.TimesCircle, "為所選潛水艇的角色停用多角色模式"))
+        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.TimesCircle, "为所选潜水艇的角色禁用多角色模式"))
         {
             var num = 0;
             foreach(var x in SelectedVessels)
@@ -396,16 +396,16 @@ public class DeployablesTab : NeoUIEntry
 
     private void AutomatedSubPlannerWidget()
     {
-        ImGui.Checkbox("啟用自動註冊潛水艇", ref C.EnableAutomaticSubRegistration);
-        ImGui.Checkbox("啟用自動更換配件與計畫", ref C.EnableAutomaticComponentsAndPlanChange);
-        ImGuiEx.Text("範圍:");
+        ImGui.Checkbox("启用自动注册潜水艇", ref C.EnableAutomaticSubRegistration);
+        ImGui.Checkbox("启用自动更换配件与计划", ref C.EnableAutomaticComponentsAndPlanChange);
+        ImGuiEx.Text("范围:");
         for(var index = C.LevelAndPartsData.Count - 1; index >= 0; index--)
         {
             var entry = C.LevelAndPartsData[index];
             if(ImGui.CollapsingHeader($"{entry.GetPlanBuild()}: {entry.MinLevel} - {entry.MaxLevel} ###{entry.GUID}"))
             {
                 ImGui.Separator();
-                ImGui.Text("等級範圍:");
+                ImGui.Text("等级范围:");
                 ImGui.SameLine();
                 ImGuiEx.SetNextItemWidthScaled(60f);
                 ImGui.PushID("##minlvl");
@@ -419,7 +419,7 @@ public class DeployablesTab : NeoUIEntry
                 ImGui.DragInt($"##maxlvl{entry.GUID}", ref entry.MaxLevel, 0.1f);
                 ImGui.PopID();
 
-                ImGui.Text("船體:");
+                ImGui.Text("船体:");
                 ImGui.SameLine(60f);
                 ImGui.SetNextItemWidth(100f);
                 ImGuiEx.EnumCombo($"##hull{entry.GUID}", ref entry.Part1);
@@ -434,16 +434,16 @@ public class DeployablesTab : NeoUIEntry
                 ImGui.SetNextItemWidth(100f);
                 ImGuiEx.EnumCombo($"##bow{entry.GUID}", ref entry.Part3);
 
-                ImGui.Text("艦橋:");
+                ImGui.Text("舰桥:");
                 ImGui.SameLine(60f);
                 ImGui.SetNextItemWidth(100f);
                 ImGuiEx.EnumCombo($"##bridge{entry.GUID}", ref entry.Part4);
 
-                ImGui.Text("行為:");
+                ImGui.Text("行为:");
                 ImGui.SameLine(60f);
                 ImGui.SetNextItemWidth(150f);
                 ImGuiEx.EnumCombo($"##behavior{entry.GUID}", ref entry.VesselBehavior);
-                ImGui.Text("計畫:");
+                ImGui.Text("计划:");
                 ImGui.SameLine(60f);
                 if(entry.VesselBehavior == VesselBehavior.Unlock)
                 {
@@ -451,7 +451,7 @@ public class DeployablesTab : NeoUIEntry
                     if(ImGui.BeginCombo($"##unlockplan{entry.GUID}", C.SubmarineUnlockPlans.Any(x => x.GUID == entry.SelectedUnlockPlan)
                                                                               ? C.SubmarineUnlockPlans.First(x => x.GUID == entry.SelectedUnlockPlan)
                                                                                  .Name
-                                                                              : "未選擇", ImGuiComboFlags.HeightLarge))
+                                                                              : "未选择", ImGuiComboFlags.HeightLarge))
                     {
                         foreach(var plan in C.SubmarineUnlockPlans)
                         {
@@ -474,7 +474,7 @@ public class DeployablesTab : NeoUIEntry
                     ImGui.SetNextItemWidth(150f);
                     if(ImGui.BeginCombo($"##pointplan{entry.GUID}", C.SubmarinePointPlans.Any(x => x.GUID == entry.SelectedPointPlan)
                                                                              ? C.SubmarinePointPlans.First(x => x.GUID == entry.SelectedPointPlan).GetPointPlanName()
-                                                                             : "未選擇", ImGuiComboFlags.HeightLarge))
+                                                                             : "未选择", ImGuiComboFlags.HeightLarge))
                     {
                         foreach(var plan in C.SubmarinePointPlans)
                         {
@@ -489,14 +489,14 @@ public class DeployablesTab : NeoUIEntry
                 }
 
                 ImGui.Separator();
-                ImGui.Checkbox($"為第一艘潛水艇使用不同的設定###firstSubDifferent{entry.GUID}", ref entry.FirstSubDifferent);
+                ImGui.Checkbox($"为第一艘潜水艇使用不同的设置###firstSubDifferent{entry.GUID}", ref entry.FirstSubDifferent);
                 if(entry.FirstSubDifferent)
                 {
-                    ImGui.Text("第一艘潛水艇行為:");
+                    ImGui.Text("第一艘潜水艇行为:");
                     ImGui.SameLine(150f);
                     ImGui.SetNextItemWidth(150f);
                     ImGuiEx.EnumCombo($"##firstSubBehavior{entry.GUID}", ref entry.FirstSubVesselBehavior);
-                    ImGui.Text("第一艘潛水艇計畫:");
+                    ImGui.Text("第一艘潜水艇计划:");
                     ImGui.SameLine(150f);
                     if(entry.FirstSubVesselBehavior == VesselBehavior.Unlock)
                     {
@@ -504,7 +504,7 @@ public class DeployablesTab : NeoUIEntry
                         if(ImGui.BeginCombo($"##firstSubUnlockplan{entry.GUID}", C.SubmarineUnlockPlans.Any(x => x.GUID == entry.FirstSubSelectedUnlockPlan)
                                                      ? C.SubmarineUnlockPlans.First(x => x.GUID == entry.FirstSubSelectedUnlockPlan)
                                                         .Name
-                                                     : "未選擇", ImGuiComboFlags.HeightLarge))
+                                                     : "未选择", ImGuiComboFlags.HeightLarge))
                         {
                             foreach(var plan in C.SubmarineUnlockPlans)
                             {
@@ -517,7 +517,7 @@ public class DeployablesTab : NeoUIEntry
                             ImGui.EndCombo();
                         }
 
-                        ImGui.Text("第一艘潛水艇模式:");
+                        ImGui.Text("第一艘潜水艇模式:");
                         ImGui.SameLine(150f);
                         ImGui.SetNextItemWidth(150f);
                         ImGuiEx.EnumCombo($"##firstSubUnlockmode{entry.GUID}", ref entry.FirstSubUnlockMode);
@@ -527,7 +527,7 @@ public class DeployablesTab : NeoUIEntry
                         ImGui.SetNextItemWidth(150f);
                         if(ImGui.BeginCombo($"##firstSubPointplan{entry.GUID}", C.SubmarinePointPlans.Any(x => x.GUID == entry.FirstSubSelectedPointPlan)
                                                      ? C.SubmarinePointPlans.First(x => x.GUID == entry.FirstSubSelectedPointPlan).GetPointPlanName()
-                                                     : "未選擇", ImGuiComboFlags.HeightLarge))
+                                                     : "未选择", ImGuiComboFlags.HeightLarge))
                         {
                             foreach(var plan in C.SubmarinePointPlans)
                             {
@@ -543,7 +543,7 @@ public class DeployablesTab : NeoUIEntry
                 }
 
                 ImGui.NewLine();
-                if(ImGui.Button($"刪除##{entry.GUID}"))
+                if(ImGui.Button($"删除##{entry.GUID}"))
                 {
                     C.LevelAndPartsData.RemoveAt(index);
                 }
@@ -551,7 +551,7 @@ public class DeployablesTab : NeoUIEntry
         }
 
         ImGui.Separator();
-        if(ImGui.Button("Add"))
+        if(ImGui.Button("添加"))
         {
             C.LevelAndPartsData.Insert(0, new());
         }

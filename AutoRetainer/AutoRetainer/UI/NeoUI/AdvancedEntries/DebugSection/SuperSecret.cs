@@ -6,20 +6,20 @@ internal class SuperSecret : DebugSectionBase
 {
     public override void Draw()
     {
-        ImGuiEx.TextWrapped(ImGuiColors.ParsedOrange, "這裡可能會發生任何狀況");
-        ImGui.Checkbox("舊版傳喚鈴感應", ref C.OldRetainerSense);
-        ImGuiComponents.HelpMarker("偵測並使用玩家有效距離內最近的傳喚鈴");
-        ImGuiEx.TextWrapped(ImGuiColors.DalamudGrey, "在多角色模式執行期間，強制啟用傳喚鈴感應");
+        ImGuiEx.TextWrapped(ImGuiColors.ParsedOrange, "这里可能会发生任何状况");
+        ImGui.Checkbox("旧版召唤铃感应", ref C.OldRetainerSense);
+        ImGuiComponents.HelpMarker("检测并使用玩家有效距离内最近的召唤铃");
+        ImGuiEx.TextWrapped(ImGuiColors.DalamudGrey, "在多角色模式执行期间，强制启用召唤铃感应");
         ImGui.Separator();
-        ImGui.Checkbox($"不安全選項保護", ref C.UnsafeProtection);
+        ImGui.Checkbox($"不安全选项保护", ref C.UnsafeProtection);
         ImGui.SameLine();
-        if(ImGui.Button($"寫入登錄檔"))
+        if(ImGui.Button($"写入注册表"))
         {
             Safety.Set(C.UnsafeProtection);
         }
         var g = Safety.Get();
-        ImGuiEx.Text(g ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudRed, $"安全標記: {(g ? "Present" : "Absent")}");
+        ImGuiEx.Text(g ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudRed, $"安全标记: {(g ? "Present" : "Absent")}");
         ImGui.Separator();
-        ImGuiEx.Checkbox("忽略籌備任務時的大國防聯軍（GC）階級檢查", ref C.IgnoreGCRankCheck);
+        ImGuiEx.Checkbox("在多角色模式下忽略军衔检查", ref C.IgnoreGCRankCheck);
     }
 }

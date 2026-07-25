@@ -21,7 +21,7 @@ internal unsafe class AutoGCHandinOverlay : Window
     {
         if(Allowed)
         {
-            ImGui.Checkbox("啟用自動籌備稀有品", ref AutoGCHandin.Operation);
+            ImGui.Checkbox("启用自动筹备稀有品", ref AutoGCHandin.Operation);
         }
         if(C.OfflineData.TryGetFirst(x => x.CID == Svc.ClientState.LocalContentId, out var d) && !AutoGCHandin.Operation)
         {
@@ -47,24 +47,24 @@ internal unsafe class AutoGCHandinOverlay : Window
         if(!Svc.ClientState.LocalPlayer.StatusList.Any(x => x.StatusId == 1078) && InventoryManager.Instance()->GetInventoryItemCount(14946) > 0)
         {
             ImGui.SameLine();
-            ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudRed, ImGuiColors.DalamudYellow), $"可使用軍票提高buff");
+            ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudRed, ImGuiColors.DalamudYellow), $"可使用军票提高buff");
         }
         if(!Player.IsInHomeWorld)
         {
             ImGui.SameLine();
-            ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudRed, ImGuiColors.DalamudYellow), $"在其它伺服器。無法獲得部隊戰績。");
+            ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudRed, ImGuiColors.DalamudYellow), $"在其他服务器。无法获得部队战绩。");
         }
         if(AutoGCHandin.Operation && Remaining != 0)
         {
             ImGui.SameLine();
-            ImGuiEx.Text(ImGuiColors.DalamudViolet, $"{Remaining} items left");
+            ImGuiEx.Text(ImGuiColors.DalamudViolet, $"剩余 {Remaining} 个物品");
         }
         height = ImGui.GetWindowSize().Y;
     }
 
     public override bool DrawConditions()
     {
-        return Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.OccupiedInQuestEvent] && (Allowed || (TryGetAddonByName<AtkUnitBase>("GrandCompanySupplyList", out var addon)
+        return Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.OccupiedInQuestEvent] && (Allowed || (TryGetAddonByName<AtkUnitBase>("军队补给列表", out var addon)
                 && addon->UldManager.NodeListCount > 20
                 && addon->UldManager.NodeList[5]->IsVisible()));
     }

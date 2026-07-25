@@ -37,7 +37,7 @@ public static unsafe class InventoryCleanupCommon
 
     public static NuiBuilder CreateCleanupHeaderBuilder()
     {
-        return new NuiBuilder().Section("背包清理計畫選擇器").Widget(DrawPlanSelector);
+        return new NuiBuilder().Section("背包清理计划选择器").Widget(DrawPlanSelector);
     }
 
     public static void DrawPlanSelector()
@@ -45,9 +45,9 @@ public static unsafe class InventoryCleanupCommon
         var selectedPlan = C.AdditionalIMSettings.FirstOrDefault(x => x.GUID == SelectedPlanGuid);
         ImGuiEx.InputWithRightButtonsArea(() =>
         {
-            if(ImGui.BeginCombo("##selimplan", selectedPlan?.DisplayName ?? "預設計畫"))
+            if(ImGui.BeginCombo("##selimplan", selectedPlan?.DisplayName ?? "默认计划"))
             {
-                if(ImGui.Selectable("預設計畫", selectedPlan == null)) SelectedPlanGuid = Guid.Empty;
+                if(ImGui.Selectable("默认计划", selectedPlan == null)) SelectedPlanGuid = Guid.Empty;
                 ImGui.Separator();
                 foreach(var x in C.AdditionalIMSettings)
                 {
@@ -73,7 +73,7 @@ public static unsafe class InventoryCleanupCommon
                 C.AdditionalIMSettings.Add(newPlan);
                 SelectedPlanGuid = newPlan.GUID;
             }
-            ImGuiEx.Tooltip("添加新的計畫");
+            ImGuiEx.Tooltip("添加新的计划");
             ImGui.SameLine(0, 1);
             if(ImGuiEx.IconButton(FontAwesomeIcon.Copy))
             {
@@ -81,7 +81,7 @@ public static unsafe class InventoryCleanupCommon
                 clone.GUID = Guid.Empty;
                 Copy(EzConfig.DefaultSerializationFactory.Serialize(clone));
             }
-            ImGuiEx.Tooltip("複製");
+            ImGuiEx.Tooltip("复制");
             ImGui.SameLine(0, 1);
             if(ImGuiEx.IconButton(FontAwesomeIcon.Paste))
             {
@@ -98,7 +98,7 @@ public static unsafe class InventoryCleanupCommon
                     Notify.Error(e.Message);
                 }
             }
-            ImGuiEx.Tooltip("貼上");
+            ImGuiEx.Tooltip("粘贴");
             if(selectedPlan != null)
             {
                 ImGui.SameLine(0, 1);
@@ -109,19 +109,19 @@ public static unsafe class InventoryCleanupCommon
                     C.DefaultIMSettings.Name = "";
                     new TickScheduler(() => C.AdditionalIMSettings.Remove(selectedPlan));
                 }
-                ImGuiEx.Tooltip("將此計畫設為預設計畫，當前預設計畫將會被覆蓋。按住CTRL + 左鍵");
+                ImGuiEx.Tooltip("将此计划设为默认计划，当前默认计划将会被覆盖。按住CTRL + 左键");
                 ImGui.SameLine(0, 1);
                 if(ImGuiEx.IconButton(FontAwesomeIcon.Trash, enabled: ImGuiEx.Ctrl && selectedPlan != null))
                 {
                     new TickScheduler(() => C.AdditionalIMSettings.Remove(selectedPlan));
                 }
-                ImGuiEx.Tooltip("刪除此計畫。按住CTRL + 左鍵");
+                ImGuiEx.Tooltip("删除此计划。按住CTRL + 左键");
             }
         });
         if(selectedPlan != null)
         {
             ImGuiEx.SetNextItemFullWidth();
-            ImGui.InputTextWithHint("##name", "Enter plan name", ref selectedPlan.Name, 100);
+            ImGui.InputTextWithHint("##name", "输入计划名称", ref selectedPlan.Name, 100);
 
             if(Data != null)
             {
@@ -129,7 +129,7 @@ public static unsafe class InventoryCleanupCommon
                 {
                     ImGuiEx.Text(ImGuiColors.ParsedGreen, UiBuilder.IconFont, FontAwesomeIcon.Check.ToIconString());
                     ImGui.SameLine();
-                    ImGuiEx.Text(ImGuiColors.ParsedGreen, $"當前角色使用");
+                    ImGuiEx.Text(ImGuiColors.ParsedGreen, $"当前角色使用");
                     ImGui.SameLine();
                     if(ImGui.SmallButton("取消分配"))
                     {
@@ -140,7 +140,7 @@ public static unsafe class InventoryCleanupCommon
                 {
                     ImGuiEx.Text(ImGuiColors.DalamudOrange, UiBuilder.IconFont, FontAwesomeIcon.ExclamationTriangle.ToIconString());
                     ImGui.SameLine();
-                    ImGuiEx.Text(ImGuiColors.DalamudOrange, $"非當前角色使用");
+                    ImGuiEx.Text(ImGuiColors.DalamudOrange, $"非当前角色使用");
                     ImGui.SameLine();
                     if(ImGui.SmallButton("分配"))
                     {
@@ -153,24 +153,24 @@ public static unsafe class InventoryCleanupCommon
             var charas = C.OfflineData.Where(x => x.ExchangePlan == selectedPlan.GUID).ToArray();
             if(charas.Length > 0)
             {
-                ImGuiEx.Text($"共有 {charas.Length} 個角色使用");
+                ImGuiEx.Text($"共有 {charas.Length} 个角色使用");
                 ImGuiEx.Tooltip($"{charas.Select(x => x.NameWithWorldCensored)}");
             }
             else
             {
-                ImGuiEx.Text($"沒有任何角色使用");
+                ImGuiEx.Text($"没有任何角色使用");
             }
 
-            ImGuiEx.Text("將此方案的清單與預設方案合併:");
+            ImGuiEx.Text("将此方案的列表与默认方案合并:");
             ImGui.Indent();
-            ImGui.Checkbox("合併僱員快速出售清單", ref selectedPlan.AdditionModeSoftSellList);
-            ImGuiEx.HelpMarker("從快速探索中獲得的物品，若同時包含在此方案與預設方案中，將會被出售。");
-            ImGui.Checkbox("合併無條件出售清單", ref selectedPlan.AdditionModeHardSellList);
-            ImGuiEx.HelpMarker("包含在此方案與預設方案中的物品都將被出售。如果同時包含在兩者中，將優先採用此方案的「忽略堆疊」設定與「最大堆疊數量」限制。");
-            ImGui.Checkbox("合併丟棄清單", ref selectedPlan.AdditionModeDiscardList);
-            ImGuiEx.HelpMarker("包含在此方案與預設方案中的物品都將被丟棄。如果同時包含在兩者中，將優先採用此方案的「忽略堆疊」設定與「最大堆疊數量」限制。");
-            ImGui.Checkbox("合併保護清單", ref selectedPlan.AdditionModeProtectList);
-            ImGuiEx.HelpMarker("包含在此方案與預設方案中的物品將受到保護，不會被自動出售、丟棄或籌備給軍隊。");
+            ImGui.Checkbox("合并雇员快速出售列表", ref selectedPlan.AdditionModeSoftSellList);
+            ImGuiEx.HelpMarker("从快速探索中获得的物品，若同时包含在此方案与默认方案中，将会被出售。");
+            ImGui.Checkbox("合并无条件出售列表", ref selectedPlan.AdditionModeHardSellList);
+            ImGuiEx.HelpMarker("包含在此方案与默认方案中的物品都将被出售。如果同时包含在两者中，将优先采用此方案的「忽略堆叠」设置与「最大堆叠数量」限制。");
+            ImGui.Checkbox("合并丢弃列表", ref selectedPlan.AdditionModeDiscardList);
+            ImGuiEx.HelpMarker("包含在此方案与默认方案中的物品都将被丢弃。如果同时包含在两者中，将优先采用此方案的「忽略堆叠」设置与「最大堆叠数量」限制。");
+            ImGui.Checkbox("合并保护列表", ref selectedPlan.AdditionModeProtectList);
+            ImGuiEx.HelpMarker("包含在此方案与默认方案中的物品将受到保护，不会被自动出售、丢弃或筹备给军队。");
             ImGui.Unindent();
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace AutoRetainer.UI.NeoUI.InventoryManagementEntries.InventoryCleanupEntries;
 public unsafe sealed class DiscardList : InventoryManagementBase
 {
-    public override string Name => "背包清理/丟棄清單";
+    public override string Name => "背包清理/丢弃列表";
     private InventoryManagementCommon InventoryManagementCommon = new();
 
     public override int DisplayPriority => -1;
@@ -17,8 +17,8 @@ public unsafe sealed class DiscardList : InventoryManagementBase
     {
         Builder = InventoryCleanupCommon.CreateCleanupHeaderBuilder()
             .Section(Name)
-            .TextWrapped("這些物品將始終被丟棄，不論其來源為何，只要其堆疊數量不超過下方可設定的數量。丟棄動作會非常頻繁地發生，會在每次可能改變背包的操作前後進行。丟棄優先級最高，即使同一物品也存在於販售或分解清單中，也會被丟棄。已設定為保護的物品不會被丟棄。 ")
-            .InputInt(150f, $"最大丟棄堆疊數", () => ref InventoryCleanupCommon.SelectedPlan.IMDiscardStackLimit)
+            .TextWrapped("这些物品将始终被丢弃，不论其来源为何，只要其堆叠数量不超过下方可设置的数量。丢弃动作会非常频繁地发生，会在每次可能改变背包的操作前后进行。丢弃优先级最高，即使同一物品也存在于出售或分解列表中，也会被丢弃。已设置为保护的物品不会被丢弃。")
+            .InputInt(150f, $"最大丢弃堆叠数", () => ref InventoryCleanupCommon.SelectedPlan.IMDiscardStackLimit)
             .Widget(() => InventoryManagementCommon.DrawListNew(
                 itemId => InventoryCleanupCommon.SelectedPlan.AddItemToList(IMListKind.Discard, itemId, out _),
                 itemId => InventoryCleanupCommon.SelectedPlan.IMDiscardList.Remove(itemId),
@@ -29,7 +29,7 @@ public unsafe sealed class DiscardList : InventoryManagementBase
                     ImGui.PushFont(UiBuilder.IconFont);
                     ImGuiEx.CollectionButtonCheckbox(FontAwesomeIcon.Database.ToIconString(), x, InventoryCleanupCommon.SelectedPlan.IMDiscardIgnoreStack);
                     ImGui.PopFont();
-                    ImGuiEx.Tooltip($"忽略此物品的堆疊設定");
+                    ImGuiEx.Tooltip($"忽略此物品的堆叠设置");
                 }))
             .Separator()
             .Widget(() =>

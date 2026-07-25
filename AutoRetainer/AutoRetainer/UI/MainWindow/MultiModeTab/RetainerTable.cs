@@ -11,9 +11,9 @@ public static unsafe class RetainerTable
     {
         if(ImGui.BeginTable("##retainertable", 4, ImGuiTableFlags.SizingFixedFit | ImGuiTableFlags.Borders))
         {
-            ImGui.TableSetupColumn("名稱", ImGuiTableColumnFlags.WidthStretch);
-            ImGui.TableSetupColumn("職業");
-            ImGui.TableSetupColumn("探險");
+            ImGui.TableSetupColumn("名称", ImGuiTableColumnFlags.WidthStretch);
+            ImGui.TableSetupColumn("职业");
+            ImGui.TableSetupColumn("探险");
             ImGui.TableSetupColumn("");
             ImGui.TableHeadersRow();
             var retainers = P.GetSelectedRetainers(data.CID);
@@ -46,7 +46,7 @@ public static unsafe class RetainerTable
                         if(!C.EnableEntrustManager) c = ImGuiColors.DalamudRed;
                         ImGuiEx.Text(c, Lang.IconDuplicate);
                         ImGui.PopFont();
-                        ImGuiEx.Tooltip($"委託計畫 \"{plan.Name}\" 已啟用。" + (plan.ManualPlan ? "\\n這是手動處理計劃" : "") + (Utils.GetReachableRetainerBell(false) != null ? "\\n點擊進行委託" : ""));
+                        ImGuiEx.Tooltip($"委托计划 \"{plan.Name}\" 已启用。" + (plan.ManualPlan ? "\\n这是手动处理计划" : "") + (Utils.GetReachableRetainerBell(false) != null ? "\\n点击进行委托" : ""));
                         if(ImGui.IsItemClicked())
                         {
                             if(!Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.OccupiedSummoningBell])
@@ -141,7 +141,7 @@ public static unsafe class RetainerTable
                 ImGuiEx.Text($"{(!ret.HasVenture ? "No Venture" : Utils.ToTimeString(ret.GetVentureSecondsRemaining(C.TimerAllowNegative)))}");
                 ImGui.TableNextColumn();
                 ImGui.TableSetBgColor(ImGuiTableBgTarget.CellBg, 0);
-                var n = $"{data.CID} {ret.Name} settings";
+                var n = $"{data.CID} {ret.Name} 设置";
                 if(ImGuiEx.IconButton(FontAwesomeIcon.Cogs, $"{data.CID} {ret.Name}"))
                 {
                     ImGui.OpenPopup(n);
@@ -152,7 +152,7 @@ public static unsafe class RetainerTable
                     ImGui.EndPopup();
                 }
                 ImGui.SameLine();
-                if(ImGuiEx.IconButton(Lang.IconPlanner, $"{data.CID} {ret.Name} planner"))
+                if(ImGuiEx.IconButton(Lang.IconPlanner, $"{data.CID} {ret.Name} 规划器"))
                 {
                     P.VenturePlanner.Open(data, ret);
                 }

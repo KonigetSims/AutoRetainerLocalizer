@@ -15,12 +15,12 @@ public unsafe class DebugCabinet : DebugSectionBase
 {
     public override void Draw()
     {
-        ImGuiEx.Text($"CanDeliverCabinet: {S.CabinetManager.CanDeliverCabinet()}");
-        if(ImGui.Button("Deliver items")) S.CabinetManager.EnqueueAllDeliverableItems();
-        if(ImGui.Button("EnqueueGoToInnAndDeliverEverything")) S.CabinetManager.EnqueueGoToInnAndDeliverEverything();
+        ImGuiEx.Text($"能否交付衣柜: {S.CabinetManager.CanDeliverCabinet()}");
+        if(ImGui.Button("交付物品")) S.CabinetManager.EnqueueAllDeliverableItems();
+        if(ImGui.Button("入队前往旅馆并交付所有物品")) S.CabinetManager.EnqueueGoToInnAndDeliverEverything();
         if(S.CabinetManager.TryGetStoredCabinetItems(out var cached, out var items))
         {
-            ImGuiEx.Text($"Cached: {cached}");
+            ImGuiEx.Text($"已缓存: {cached}");
         }
     }
 }

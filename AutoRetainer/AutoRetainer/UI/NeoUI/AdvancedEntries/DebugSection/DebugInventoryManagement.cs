@@ -15,7 +15,7 @@ public unsafe class DebugInventoryManagement : DebugSectionBase
 
     public override void Draw()
     {
-        if(ImGui.CollapsingHeader("Inventories"))
+        if(ImGui.CollapsingHeader("背包"))
         {
             foreach(var x in Enum.GetValues<InventoryType>())
             {
@@ -30,21 +30,21 @@ public unsafe class DebugInventoryManagement : DebugSectionBase
                 });
             }
         }
-        if(ImGui.CollapsingHeader("Shop Sell test"))
+        if(ImGui.CollapsingHeader("商店出售测试"))
         {
-            ImGuiEx.EnumCombo($"type", ref Type);
-            ImGui.InputInt("Slot", ref slot);
+            ImGuiEx.EnumCombo($"类型", ref Type);
+            ImGui.InputInt("栏位", ref slot);
             ImGuiEx.Text(ExcelItemHelper.GetName(InventoryManager.Instance()->GetInventoryContainer(Type)->GetInventorySlot(slot)->ItemId));
-            if(ImGui.Button("Sell"))
+            if(ImGui.Button("出售"))
             {
                 P.Memory.SellItemToShop(Type, slot);
             }
-            if(ImGui.Button("Enqueue if present"))
+            if(ImGui.Button("如果存在则入队"))
             {
                 NpcSaleManager.EnqueueIfItemsPresent();
             }
-            ImGuiEx.Text($"Valid npc: {NpcSaleManager.GetValidNPC()}");
-            if(ImGui.Button("Interact with target")) TargetSystem.Instance()->InteractWithObject(Svc.Targets.Target.Struct(), false);
+            ImGuiEx.Text($"有效NPC: {NpcSaleManager.GetValidNPC()}");
+            if(ImGui.Button("与目标交互")) TargetSystem.Instance()->InteractWithObject(Svc.Targets.Target.Struct(), false);
             if(TryGetAddonMaster<AddonMaster.SelectIconString>(out var m))
             {
                 foreach(var x in m.Entries)
@@ -56,7 +56,7 @@ public unsafe class DebugInventoryManagement : DebugSectionBase
                 }
             }
         }
-        if(ImGui.CollapsingHeader("Vendor list"))
+        if(ImGui.CollapsingHeader("商人列表"))
         {
             foreach(var x in Vendors)
             {
@@ -70,7 +70,7 @@ public unsafe class DebugInventoryManagement : DebugSectionBase
                     if(ImGuiEx.Shift) Whitelist.Remove(x);
                 }
             }
-            if(ImGui.Button("複製")) Copy(Whitelist.Print());
+            if(ImGui.Button("复制")) Copy(Whitelist.Print());
         }
     }
 

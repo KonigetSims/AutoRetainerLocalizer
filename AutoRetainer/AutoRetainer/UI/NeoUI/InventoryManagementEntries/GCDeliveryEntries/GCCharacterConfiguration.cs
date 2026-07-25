@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace AutoRetainer.UI.NeoUI.InventoryManagementEntries.GCDeliveryEntries;
 public sealed unsafe class GCCharacterConfiguration : InventoryManagementBase
 {
-    public override string Name { get; } = "大國防聯軍 - 籌備設定";
+    public override string Name { get; } = "军队票券 - 筹备设置";
 
     public override int DisplayPriority => -10;
 
     public override void Draw()
     {
-        ImGuiEx.TextWrapped($"在這裡您可以將預先設定好的兌換清單指派給已註冊的角色，並選擇籌備模式。");
+        ImGuiEx.TextWrapped($"在这里您可以将预先设置好的兑换列表分配给已注册的角色，并选择筹备模式。");
         ImGuiEx.SetNextItemFullWidth();
         ImGuiEx.FilteringInputTextWithHint("##search", "搜索...", out var filter);
-        if(ImGuiEx.BeginDefaultTable(["~Character", "計畫", "籌備模式"]))
+        if(ImGuiEx.BeginDefaultTable(["~角色", "计划", "筹备模式"]))
         {
             foreach(var characterData in C.OfflineData)
             {
@@ -28,9 +28,9 @@ public sealed unsafe class GCCharacterConfiguration : InventoryManagementBase
                 ImGui.TableNextColumn();
                 var plan = characterData.ExchangePlan == Guid.Empty ? null : C.AdditionalGCExchangePlans.FirstOrDefault(p => p.GUID == characterData.ExchangePlan);
                 ImGui.SetNextItemWidth(200f);
-                if(ImGui.BeginCombo("##chPlan", plan?.DisplayName ?? "預設計畫", ImGuiComboFlags.HeightLarge))
+                if(ImGui.BeginCombo("##chPlan", plan?.DisplayName ?? "默认计划", ImGuiComboFlags.HeightLarge))
                 {
-                    if(ImGui.Selectable("預設計畫", plan == null)) characterData.ExchangePlan = Guid.Empty;
+                    if(ImGui.Selectable("默认计划", plan == null)) characterData.ExchangePlan = Guid.Empty;
                     ImGui.Separator();
                     foreach(var exchangePlan in C.AdditionalGCExchangePlans)
                     {
@@ -43,7 +43,7 @@ public sealed unsafe class GCCharacterConfiguration : InventoryManagementBase
                     }
                     ImGui.EndCombo();
                 }
-                ImGuiEx.DragDropRepopulate("計畫", plan?.GUID ?? Guid.Empty, ref characterData.ExchangePlan);
+                ImGuiEx.DragDropRepopulate("计划", plan?.GUID ?? Guid.Empty, ref characterData.ExchangePlan);
 
                 ImGui.TableNextColumn();
                 ImGui.SetNextItemWidth(150f);

@@ -13,10 +13,10 @@ public sealed unsafe class CleanupCharacterConfiguration : InventoryManagementBa
 
     public override void Draw()
     {
-        ImGuiEx.TextWrapped($"在這邊可以將預設的背包清理清單指派給已註冊角色。");
+        ImGuiEx.TextWrapped($"在这里可以将预设的背包清理列表分配给已注册角色。");
         ImGuiEx.SetNextItemFullWidth();
         ImGuiEx.FilteringInputTextWithHint("##search", "搜索...", out var filter);
-        if(ImGuiEx.BeginDefaultTable(["~Character", "計畫"]))
+        if(ImGuiEx.BeginDefaultTable(["~角色", "计划"]))
         {
             foreach(var characterData in C.OfflineData)
             {
@@ -28,9 +28,9 @@ public sealed unsafe class CleanupCharacterConfiguration : InventoryManagementBa
                 ImGui.TableNextColumn();
                 var plan = characterData.InventoryCleanupPlan == Guid.Empty ? null : C.AdditionalIMSettings.FirstOrDefault(p => p.GUID == characterData.InventoryCleanupPlan);
                 ImGui.SetNextItemWidth(200f);
-                if(ImGui.BeginCombo("##chPlan", plan?.DisplayName ?? "預設計畫", ImGuiComboFlags.HeightLarge))
+                if(ImGui.BeginCombo("##chPlan", plan?.DisplayName ?? "默认计划", ImGuiComboFlags.HeightLarge))
                 {
-                    if(ImGui.Selectable("預設計畫", plan == null)) characterData.InventoryCleanupPlan = Guid.Empty;
+                    if(ImGui.Selectable("默认计划", plan == null)) characterData.InventoryCleanupPlan = Guid.Empty;
                     ImGui.Separator();
                     foreach(var cleanupPlan in C.AdditionalIMSettings)
                     {
@@ -43,7 +43,7 @@ public sealed unsafe class CleanupCharacterConfiguration : InventoryManagementBa
                     }
                     ImGui.EndCombo();
                 }
-                ImGuiEx.DragDropRepopulate("CleanupPlan", plan?.GUID ?? Guid.Empty, ref characterData.InventoryCleanupPlan);
+                ImGuiEx.DragDropRepopulate("清理计划", plan?.GUID ?? Guid.Empty, ref characterData.InventoryCleanupPlan);
 
                 ImGui.PopID();
             }

@@ -2,5 +2,5 @@ namespace AutoRetainer.UI.NeoUI.InventoryManagementEntries;
 public abstract class InventoryManagementBase : NeoUIEntry
 {
     public abstract string Name { get; }
-    public sealed override string Path => $"庫存管理/{Name}";
+    public sealed override string Path => $"库存管理/{Name}";
 }

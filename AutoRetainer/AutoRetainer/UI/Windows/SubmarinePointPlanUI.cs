@@ -37,7 +37,7 @@ internal unsafe class SubmarinePointPlanUI : Window
     public override void Draw()
     {
         C.SubmarinePointPlans.RemoveAll(x => x.Delete);
-        ImGuiEx.InputWithRightButtonsArea("潛艇計畫選擇器", () =>
+        ImGuiEx.InputWithRightButtonsArea("潜艇计划选择器", () =>
         {
             if(ImGui.BeginCombo("##supsel", SelectedPlanName, ImGuiComboFlags.HeightLarge))
             {
@@ -52,7 +52,7 @@ internal unsafe class SubmarinePointPlanUI : Window
             }
         }, () =>
         {
-            if(ImGui.Button("新計畫"))
+            if(ImGui.Button("新计划"))
             {
                 var x = new SubmarinePointPlan
                 {
@@ -65,7 +65,7 @@ internal unsafe class SubmarinePointPlanUI : Window
         ImGui.Separator();
         if(SelectedPlan == null)
         {
-            ImGuiEx.Text($"未選擇計畫或計畫未知");
+            ImGuiEx.Text($"未选择计划或计划未知");
         }
         else
         {
@@ -77,63 +77,63 @@ internal unsafe class SubmarinePointPlanUI : Window
                 {
                     if(!my.Any())
                     {
-                        ImGuiEx.TextWrapped($"沒有任何潛水艇使用此計畫");
+                        ImGuiEx.TextWrapped($"没有任何潜水艇使用此计划");
                     }
                     else
                     {
-                        ImGuiEx.TextWrapped($"此計畫正被 {my.Select(X => X.Key).Print()} 使用中");
+                        ImGuiEx.TextWrapped($"此计划正被 {my.Select(X => X.Key).Print()} 使用中");
                     }
                 }
                 else
                 {
                     if(!my.Any())
                     {
-                        ImGuiEx.TextWrapped($"此計畫正被你其他角色的 {users} 艘潛水艇使用中");
+                        ImGuiEx.TextWrapped($"此计划正被你其他角色的 {users} 艘潜水艇使用中");
                     }
                     else
                     {
-                        ImGuiEx.TextWrapped($"此計畫正被 {my.Select(X => X.Key).Print()} 以及其他角色的額外 {users} 艘潛水艇使用中");
+                        ImGuiEx.TextWrapped($"此计划正被 {my.Select(X => X.Key).Print()} 以及其他角色的额外 {users} 艘潜水艇使用中");
                     }
                 }
             }
-            ImGuiEx.TextV("名稱: ");
+            ImGuiEx.TextV("名称: ");
             ImGui.SameLine();
             ImGuiEx.SetNextItemFullWidth();
             ImGui.InputText($"##planname", ref SelectedPlan.Name, 100);
             ImGuiEx.LineCentered($"planbuttons", () =>
             {
-                ImGuiEx.TextV($"將此計畫套用於：");
+                ImGuiEx.TextV($"将此计划应用于：");
                 ImGui.SameLine();
-                if(ImGui.Button("所有潛水艇"))
+                if(ImGui.Button("所有潜水艇"))
                 {
                     C.OfflineData.Each(x => x.AdditionalSubmarineData.Each(s => s.Value.SelectedPointPlan = SelectedPlanGuid));
                 }
                 ImGui.SameLine();
-                if(ImGui.Button("當前角色的潛水艇"))
+                if(ImGui.Button("当前角色的潜水艇"))
                 {
                     Data.AdditionalSubmarineData.Each(s => s.Value.SelectedPointPlan = SelectedPlanGuid);
                 }
                 ImGui.SameLine();
-                if(ImGui.Button("無潛水艇"))
+                if(ImGui.Button("无潜水艇"))
                 {
                     C.OfflineData.Each(x => x.AdditionalSubmarineData.Where(s => s.Value.SelectedPointPlan == SelectedPlanGuid).Each(s => s.Value.SelectedPointPlan = Guid.Empty.ToString()));
                 }
             });
             ImGuiEx.LineCentered($"planbuttons2", () =>
             {
-                if(ImGui.Button($"複製計畫設定"))
+                if(ImGui.Button($"复制计划设置"))
                 {
                     Copy(JsonConvert.SerializeObject(SelectedPlan));
                 }
                 ImGui.SameLine();
-                if(ImGui.Button($"貼上計畫設定"))
+                if(ImGui.Button($"粘贴计划设置"))
                 {
                     try
                     {
                         var plan = JsonConvert.DeserializeObject<SubmarinePointPlan>(Paste());
                         if(!plan.IsModified())
                         {
-                            Notify.Error("無法匯入剪貼簿內容。請確認計畫格式是否正確？");
+                            Notify.Error("无法导入剪贴板内容。请确认计划格式是否正确？");
                         }
                         else
                         {
@@ -142,18 +142,18 @@ internal unsafe class SubmarinePointPlanUI : Window
                     }
                     catch(Exception ex)
                     {
-                        DuoLog.Error($"無法匯入計畫： {ex.Message}");
+                        DuoLog.Error($"无法导入计划： {ex.Message}");
                         ex.Log();
                     }
                 }
                 ImGui.SameLine();
-                if(ImGuiEx.ButtonCtrl("刪除此方案"))
+                if(ImGuiEx.ButtonCtrl("删除此方案"))
                 {
                     SelectedPlan.Delete = true;
                 }
             });
 
-            ImGuiEx.EzTableColumns("SubPlan",
+            ImGuiEx.EzTableColumns("潜艇计划",
             [
                 delegate
                 {
@@ -183,7 +183,7 @@ internal unsafe class SubmarinePointPlanUI : Window
                     ImGui.EndChild();
                 }, delegate
                 {
-                    if(ImGui.BeginChild("Col2"))
+                    if(ImGui.BeginChild("列2"))
                     {
                         var map = SelectedPlan.GetMap();
                         if(map != null)

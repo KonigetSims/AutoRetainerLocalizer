@@ -9,18 +9,18 @@ internal unsafe class DebugIPC : DebugSectionBase
 {
     public override void Draw()
     {
-        ImGuiEx.Text($"獲取最接近的僱員探險剩餘秒數 {S.EzIPCManager.IPC_PluginState.GetClosestRetainerVentureSecondsRemaining(Player.CID)}");
-        ImGui.Checkbox($"API Test", ref ApiTest.Enabled);
-        ImGuiEx.Text($"IPC suppressed: {Svc.PluginInterface.GetIpcSubscriber<bool>("AutoRetainer.GetSuppressed").InvokeFunc()}");
-        if(ImGui.Button($"Suppress = true"))
+        ImGuiEx.Text($"获取最接近的雇员探险剩余秒数 {S.EzIPCManager.IPC_PluginState.GetClosestRetainerVentureSecondsRemaining(Player.CID)}");
+        ImGui.Checkbox($"API 测试", ref ApiTest.Enabled);
+        ImGuiEx.Text($"IPC 已抑制: {Svc.PluginInterface.GetIpcSubscriber<bool>("AutoRetainer.GetSuppressed").InvokeFunc()}");
+        if(ImGui.Button($"抑制 = 是"))
         {
             Svc.PluginInterface.GetIpcSubscriber<bool, object>("AutoRetainer.SetSuppressed").InvokeAction(true);
         }
-        if(ImGui.Button($"Suppress = false"))
+        if(ImGui.Button($"抑制 = 否"))
         {
             Svc.PluginInterface.GetIpcSubscriber<bool, object>("AutoRetainer.SetSuppressed").InvokeAction(false);
         }
-        if(TryGetAddonByName<AddonSelectString>("SelectString", out var sel))
+        if(TryGetAddonByName<AddonSelectString>("选择字符串", out var sel))
         {
             var entries = Utils.GetEntries(sel);
             foreach(var x in entries)

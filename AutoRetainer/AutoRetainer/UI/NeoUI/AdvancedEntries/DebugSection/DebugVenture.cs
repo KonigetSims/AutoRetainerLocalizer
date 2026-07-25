@@ -20,9 +20,9 @@ internal unsafe class DebugVenture : DebugSectionBase
                 ImGuiEx.Text($"{*(ushort*)((uint)agent + 456)}");
             }
         }
-        if(TryGetAddonByName<AddonRetainerTaskAsk>("RetainerTaskAsk", out var addon) && IsAddonReady(&addon->AtkUnitBase))
+        if(TryGetAddonByName<AddonRetainerTaskAsk>("雇员任务询问", out var addon) && IsAddonReady(&addon->AtkUnitBase))
         {
-            ImGuiEx.Text($"Enabled: {addon->AssignButton->IsEnabled}");
+            ImGuiEx.Text($"已启用: {addon->AssignButton->IsEnabled}");
         }
 
         foreach(var x in C.OfflineData)
@@ -30,27 +30,27 @@ internal unsafe class DebugVenture : DebugSectionBase
             foreach(var r in x.RetainerData)
             {
                 var adata = Utils.GetAdditionalData(x.CID, r.Name);
-                ImGuiEx.Text($"{x.Name}@{x.World} - {r.Name} last venture index: {adata.VenturePlanIndex}, next venture: {adata.GetNextPlannedVenture()}/{VentureUtils.GetVentureName(adata.GetNextPlannedVenture())}");
+                ImGuiEx.Text($"{x.Name}@{x.World} - {r.Name} 上次探险索引: {adata.VenturePlanIndex}, 下次探险: {adata.GetNextPlannedVenture()}/{VentureUtils.GetVentureName(adata.GetNextPlannedVenture())}");
             }
         }
-        ImGui.InputInt("Venture id", ref VentureID);
-        ImGui.InputText("Venture name", ref VentureName, 100);
+        ImGui.InputInt("探险 ID", ref VentureID);
+        ImGui.InputText("探险名称", ref VentureName, 100);
         //if (ImGui.Button("SearchVentureByName")) DuoLog.Information(RetainerHandlers.SearchVentureByName(VentureName).ToString());
-        if(ImGui.Button("Clear Venture list")) DuoLog.Information(RetainerHandlers.ClearTaskSupplylist().ToString());
-        if(ImGui.Button("SelectSpecificVenture Name")) DuoLog.Information(RetainerHandlers.SelectSpecificVentureByName(VentureName).ToString());
-        if(ImGui.Button("TaskAssignHuntingVenture"))
+        if(ImGui.Button("清除探险列表")) DuoLog.Information(RetainerHandlers.ClearTaskSupplylist().ToString());
+        if(ImGui.Button("选择特定探险名称")) DuoLog.Information(RetainerHandlers.SelectSpecificVentureByName(VentureName).ToString());
+        if(ImGui.Button("任务分配狩猎探险"))
         {
             TaskAssignHuntingVenture.Enqueue((uint)VentureID);
         }
-        if(ImGui.Button("TaskAssignFieldExploration"))
+        if(ImGui.Button("任务分配领域探索"))
         {
             TaskAssignFieldExploration.Enqueue((uint)VentureID);
         }
-        if(ImGui.Button("Select"))
+        if(ImGui.Button("选择"))
         {
             RetainerHandlers.SelectSpecificVenture((uint)VentureID);
         }
-        if(ImGui.CollapsingHeader("僱員派遣"))
+        if(ImGui.CollapsingHeader("雇员探险"))
         {
             var data = CSFramework.Instance()->UIModule->GetRaptureAtkModule()->AtkModule.GetStringArrayData(95);
             if(data != null)
@@ -65,13 +65,13 @@ internal unsafe class DebugVenture : DebugSectionBase
                     }
                     else
                     {
-                        ImGuiEx.Text($"{i}: null");
+                        ImGuiEx.Text($"{i}: 空");
                     }
                 }
             }
         }
 
-        if(ImGui.CollapsingHeader("GetAvailableVentureNames"))
+        if(ImGui.CollapsingHeader("获取可用探险名称"))
         {
             foreach(var x in VentureUtils.GetAvailableVentureNames())
             {

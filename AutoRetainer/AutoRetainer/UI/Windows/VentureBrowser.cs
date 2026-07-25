@@ -47,7 +47,7 @@ internal class VentureBrowser : Window
     public override void Draw()
     {
         ImGuiEx.SetNextItemFullWidth();
-        if(ImGui.BeginCombo("##selectRet", SelectedCharacter != null ? $"{Censor.Character(SelectedCharacter.Name, SelectedCharacter.World)} - {Censor.Retainer(SelectedRetainer.Name)} - {SelectedRetainer.Level} {ExcelJobHelper.GetJobNameById(SelectedRetainer.Job)}" : "選擇僱員...", ImGuiComboFlags.HeightLarge))
+        if(ImGui.BeginCombo("##selectRet", SelectedCharacter != null ? $"{Censor.Character(SelectedCharacter.Name, SelectedCharacter.World)} - {Censor.Retainer(SelectedRetainer.Name)} - {SelectedRetainer.Level} {ExcelJobHelper.GetJobNameById(SelectedRetainer.Job)}" : "选择雇员...", ImGuiComboFlags.HeightLarge))
         {
             foreach(var x in C.OfflineData.OrderBy(x => !C.NoCurrentCharaOnTop && x.CID == Player.CID ? 0 : 1))
             {
@@ -75,9 +75,9 @@ internal class VentureBrowser : Window
             {
                 ImGuiEx.TextCentered($"{Lang.CharLevel}{SelectedRetainer.Level} {ExcelJobHelper.GetJobNameById(SelectedRetainer.Job)} | Item Level: {adata.Ilvl} ({adata.Ilvl / (float)MaxPerception:P0})");
             }
-            ImGuiEx.InputWithRightButtonsArea("潛艇瀏覽器", delegate
+            ImGuiEx.InputWithRightButtonsArea("潜艇浏览器", delegate
             {
-                ImGui.InputTextWithHint("##search", "篩選...", ref search, 100);
+                ImGui.InputTextWithHint("##search", "筛选...", ref search, 100);
             }, delegate
             {
                 ImGuiEx.TextV($"{Lang.CharLevel}:");
@@ -92,7 +92,7 @@ internal class VentureBrowser : Window
             });
             if(adata.Gathering == -1 || adata.Perception == -1 || adata.Ilvl == -1 || SelectedRetainer.Level == 0)
             {
-                ImGuiEx.TextWrapped($"缺少此僱員的數據。請與僱員鈴互動並點選該僱員以填入數據。");
+                ImGuiEx.TextWrapped($"缺少此雇员的数据。请与雇员铃互动并点击该雇员以填入数据。");
             }
             else
             {
@@ -125,14 +125,14 @@ internal class VentureBrowser : Window
                 {
                     ImGui.TableSetupScrollFreeze(0, 1);
                     ImGui.TableSetupColumn(Lang.CharLevel);
-                    ImGui.TableSetupColumn("名稱", ImGuiTableColumnFlags.WidthStretch);
+                    ImGui.TableSetupColumn("名称", ImGuiTableColumnFlags.WidthStretch);
                     ImGui.TableSetupColumn(Data.FirstOrDefault()?.IsDol == true ? Lang.CharPlant : Lang.CharItemLevel);
                     ImGui.TableSetupColumn("☆☆☆☆");
                     ImGui.TableSetupColumn("★☆☆☆");
                     ImGui.TableSetupColumn("★★☆☆");
                     ImGui.TableSetupColumn("★★★☆");
                     ImGui.TableSetupColumn("★★★★");
-                    ImGui.TableSetupColumn("已解鎖");
+                    ImGui.TableSetupColumn("已解锁");
                     ImGui.TableHeadersRow();
 
                     foreach(var x in Data.Where(x => x.VentureName.Contains(search, StringComparison.OrdinalIgnoreCase) && x.VentureLevel >= minLevel && x.VentureLevel <= maxLevel))
@@ -143,12 +143,12 @@ internal class VentureBrowser : Window
                         ImGuiEx.TextCentered(SelectedRetainer.Level >= x.VentureLevel ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudRed, $"{x.VentureLevel}");
                         ImGui.TableNextColumn();
                         ImGuiEx.Text($"{x.VentureName}");
-                        if(ImGui.SmallButton($"To planner##{x.ID}"))
+                        if(ImGui.SmallButton($"前往规划器##{x.ID}"))
                         {
                             adata.VenturePlan.List.Add(new(x.ID));
                         }
                         ImGui.SameLine();
-                        if(ImGui.SmallButton($"Check price##{x.ID}"))
+                        if(ImGui.SmallButton($"查看价格##{x.ID}"))
                         {
                             Svc.Commands.ProcessCommand($"/pmb {x.ItemID}");
                         }
@@ -186,7 +186,7 @@ internal class VentureBrowser : Window
                             ImGuiEx.Text(x.Gathered ? ImGuiColors.ParsedGreen : ImGuiColors.DalamudRed, x.Gathered ? "是" : "否");
                             if(!x.Gathered && GatherBuddyPresent)
                             {
-                                if(ImGui.SmallButton($"Gather##{x.ID}"))
+                                if(ImGui.SmallButton($"采集##{x.ID}"))
                                 {
                                     Svc.Commands.ProcessCommand($"/gather {x.VentureName}");
                                 }
@@ -194,7 +194,7 @@ internal class VentureBrowser : Window
                         }
                         else
                         {
-                            ImGuiEx.Text($"常駐");
+                            ImGuiEx.Text($"常驻");
                         }
                     }
 

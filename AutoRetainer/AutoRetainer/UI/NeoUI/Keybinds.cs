@@ -1,20 +1,20 @@
 namespace AutoRetainer.UI.NeoUI;
 public class Keybinds : NeoUIEntry
 {
-    public override string Path => "快捷鍵設定";
+    public override string Path => "快捷键设置";
 
     public override NuiBuilder Builder { get; init; } = new NuiBuilder()
-        .Section("訪問傳喚鈴/管制面板的快捷鍵")
-        .Widget("使用傳喚鈴/管制面板時，暫時防止 AutoRetainer 自動啟動", (x) =>
+        .Section("访问召唤铃/控制面板的快捷键")
+        .Widget("使用召唤铃/控制面板时，暂时防止 AutoRetainer 自动启动", (x) =>
         {
             UIUtils.DrawKeybind(x, ref C.Suppress);
         })
-        .Widget("暫時設定為僅領取模式，防止在當前循環中分派任務/暫時將潛艇模式設定為僅結算", (x) =>
+        .Widget("暂时设置为仅领取模式，防止在当前循环中分配任务/暂时将潜艇模式设置为仅结算", (x) =>
         {
             UIUtils.DrawKeybind(x, ref C.TempCollectB);
         })
 
-        .Section("僱員快速動作")
+        .Section("雇员快速动作")
         .Widget("出售物品", (x) => UIUtils.QRA(x, ref C.SellKey))
         .Widget("存放物品", (x) => UIUtils.QRA(x, ref C.EntrustKey))
         .Widget("取回物品", (x) => UIUtils.QRA(x, ref C.RetrieveKey))

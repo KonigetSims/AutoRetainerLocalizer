@@ -11,7 +11,7 @@ namespace AutoRetainer.UI.NeoUI.InventoryManagementEntries.GCDeliveryEntries;
 public sealed unsafe class ExchangeLists : InventoryManagementBase
 {
     private ImGuiEx.RealtimeDragDrop<GCExchangeItem> DragDrop = new("GCELDD", x => x.ID);
-    public override string Name { get; } = "大國防聯軍 - 軍票交換清單";
+    public override string Name { get; } = "军队票券交换列表";
     private GCExchangeCategoryTab? SelectedCategory = null;
     private GCExchangeCategoryTab? SelectedCategory2 = null;
     private GCExchangeRankTab? SelectedRank = null;
@@ -23,22 +23,22 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
     {
         C.AdditionalGCExchangePlans.Where(x => x.GUID == Guid.Empty).Each(x => x.GUID = Guid.NewGuid());
         ImGuiEx.TextWrapped($"""
-            選擇在大國防聯軍專家籌備期間要自動購買的物品。購買邏輯：
-            - 系統將嘗試購買清單中第一個可用的物品。
-            - 購買將持續到該物品在背包中的數量達到指定目標為止。
-            如果清單中沒有物品可供購買，或背包空間不足：
-            - 系統將轉為購買探險幣。
-            - 購買探險幣將持續到您的探險幣數量達到 65,000 個。
-            一旦達到探險幣上限且無法再進行其他購買：
-            - 任何多餘的軍票都將被丟棄。
+            选择在军队筹备稀有品期间要自动购买的物品。购买逻辑：
+            - 系统将尝试购买列表中第一个可用的物品。
+            - 购买将持续到该物品在背包中的数量达到指定目标为止。
+            如果列表中没有物品可供购买，或背包空间不足：
+            - 系统将转为购买探险币。
+            - 购买探险币将持续到您的探险币数量达到 65,000 个。
+            一旦达到探险币上限且无法再进行其他购买：
+            - 任何多余的军票都将被丢弃。
             """);
 
         var selectedPlan = C.AdditionalGCExchangePlans.FirstOrDefault(x => x.GUID == SelectedPlanGuid);
         ImGuiEx.InputWithRightButtonsArea(() =>
         {
-            if(ImGui.BeginCombo("##selplan", selectedPlan?.DisplayName ?? "預設計畫"))
+            if(ImGui.BeginCombo("##selplan", selectedPlan?.DisplayName ?? "默认计划"))
             {
-                if(ImGui.Selectable("預設計畫", selectedPlan == null)) SelectedPlanGuid = Guid.Empty;
+                if(ImGui.Selectable("默认计划", selectedPlan == null)) SelectedPlanGuid = Guid.Empty;
                 ImGui.Separator();
                 foreach(var x in C.AdditionalGCExchangePlans)
                 {
@@ -56,7 +56,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                 C.AdditionalGCExchangePlans.Add(newPlan);
                 SelectedPlanGuid = newPlan.GUID;
             }
-            ImGuiEx.Tooltip("添加新的計畫");
+            ImGuiEx.Tooltip("添加新的计划");
             ImGui.SameLine(0, 1);
             if(ImGuiEx.IconButton(FontAwesomeIcon.Copy))
             {
@@ -64,7 +64,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                 clone.GUID = Guid.Empty;
                 Copy(EzConfig.DefaultSerializationFactory.Serialize(clone));
             }
-            ImGuiEx.Tooltip("複製");
+            ImGuiEx.Tooltip("复制");
             ImGui.SameLine(0, 1);
             if(ImGuiEx.IconButton(FontAwesomeIcon.Paste))
             {
@@ -81,7 +81,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                     Notify.Error(e.Message);
                 }
             }
-            ImGuiEx.Tooltip("貼上");
+            ImGuiEx.Tooltip("粘贴");
             if(selectedPlan != null)
             {
                 ImGui.SameLine(0, 1);
@@ -92,13 +92,13 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                     C.DefaultGCExchangePlan.GUID.Regenerate();
                     new TickScheduler(() => C.AdditionalGCExchangePlans.Remove(selectedPlan));
                 }
-                ImGuiEx.Tooltip("將此計畫設為預設計畫，當前預設計畫將會被覆蓋。按住CTRL + 左鍵");
+                ImGuiEx.Tooltip("将此计划设为默认计划，当前默认计划将会被覆盖。按住CTRL + 左键");
                 ImGui.SameLine(0, 1);
                 if(ImGuiEx.IconButton(FontAwesomeIcon.Trash, enabled: ImGuiEx.Ctrl && selectedPlan != null))
                 {
                     new TickScheduler(() => C.AdditionalGCExchangePlans.Remove(selectedPlan));
                 }
-                ImGuiEx.Tooltip("刪除此計畫。按住CTRL + 左鍵");
+                ImGuiEx.Tooltip("删除此计划。按住CTRL + 左键");
             }
         });
 
@@ -114,7 +114,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                 {
                     ImGuiEx.Text(ImGuiColors.ParsedGreen, UiBuilder.IconFont, FontAwesomeIcon.Check.ToIconString());
                     ImGui.SameLine();
-                    ImGuiEx.Text(ImGuiColors.ParsedGreen, $"當前角色使用");
+                    ImGuiEx.Text(ImGuiColors.ParsedGreen, $"当前角色使用");
                     ImGui.SameLine();
                     if(ImGui.SmallButton("取消分配"))
                     {
@@ -125,7 +125,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                 {
                     ImGuiEx.Text(ImGuiColors.DalamudOrange, UiBuilder.IconFont, FontAwesomeIcon.ExclamationTriangle.ToIconString());
                     ImGui.SameLine();
-                    ImGuiEx.Text(ImGuiColors.DalamudOrange, $"非當前角色使用");
+                    ImGuiEx.Text(ImGuiColors.DalamudOrange, $"非当前角色使用");
                     ImGui.SameLine();
                     if(ImGui.SmallButton("分配"))
                     {
@@ -138,12 +138,12 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
             var charas = C.OfflineData.Where(x => x.ExchangePlan == selectedPlan.GUID).ToArray();
             if(charas.Length > 0)
             {
-                ImGuiEx.Text($"共有 {charas.Length} 個角色使用");
+                ImGuiEx.Text($"共有 {charas.Length} 个角色使用");
                 ImGuiEx.Tooltip($"{charas.Select(x => x.NameWithWorldCensored)}");
             }
             else
             {
-                ImGuiEx.Text($"沒有任何角色使用");
+                ImGuiEx.Text($"没有任何角色使用");
             }
 
                 var planIndex = C.AdditionalGCExchangePlans.IndexOf(x => x.GUID == SelectedPlanGuid);
@@ -160,35 +160,35 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
 
     public void DrawGCEchangeList(GCExchangePlan plan)
     {
-        ref string getFilter() => ref Ref<string>.Get($"{plan.ID}filter");
-        ref bool onlySelected() => ref Ref<bool>.Get($"{plan.ID}onlySel");
-        ref string getFilter2() => ref Ref<string>.Get($"{plan.ID}filter2");
+        ref string getFilter() => ref Ref<string>.Get($"{plan.ID}筛选");
+        ref bool onlySelected() => ref Ref<bool>.Get($"{plan.ID}仅显示已选");
+        ref string getFilter2() => ref Ref<string>.Get($"{plan.ID}筛选2");
 
         ImGui.PushID(plan.ID);
         plan.Validate();
 
-        ImGuiEx.InputWithRightButtonsArea("GCPlanSettings", () =>
+        ImGuiEx.InputWithRightButtonsArea("军队计划设置", () =>
         {
             if(ReferenceEquals(plan, C.DefaultGCExchangePlan))
             {
                 ImGui.BeginDisabled();
-                var s = "預設的交換計劃無法被重新命名";
+                var s = "默认的交换计划无法被重新命名";
                 ImGui.InputText("##name", ref s, 1);
                 ImGui.EndDisabled();
             }
             else
             {
-                ImGui.InputTextWithHint($"##name", "名稱", ref plan.Name, 100);
-                ImGuiEx.Tooltip("交換計畫名稱");
+                ImGui.InputTextWithHint($"##name", "名称", ref plan.Name, 100);
+                ImGuiEx.Tooltip("交换计划名称");
             }
         }, () =>
         {
             ImGui.SetNextItemWidth(100f);
-            ImGui.InputInt("保留軍票數量", ref plan.RemainingSeals.ValidateRange(0, 70000), 0, 0);
-            ImGuiEx.HelpMarker($"執行交換清單後保留的軍票數量(最大不超過角色軍階可持有上限減 20,000)");
+            ImGui.InputInt("保留军票数量", ref plan.RemainingSeals.ValidateRange(0, 70000), 0, 0);
+            ImGuiEx.HelpMarker($"执行交换列表后保留的军票数量(最大不超过角色军衔可持有上限减 20,000)");
             ImGui.SameLine();
-            ImGui.Checkbox("籌備後交換", ref plan.FinalizeByPurchasing);
-            ImGuiEx.HelpMarker("勾選後將會在籌備稀有品完成後交換物品；未勾選則在軍票到達上限後才交換");
+            ImGui.Checkbox("筹备后交换", ref plan.FinalizeByPurchasing);
+            ImGuiEx.HelpMarker("勾选后将会在筹备稀有品完成后交换物品；未勾选则在军票到达上限后才交换");
         });
 
         ImGuiEx.SetNextItemFullWidth();
@@ -200,8 +200,8 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
             }, () =>
             {
                 ImGui.SetNextItemWidth(100f);
-                ImGuiEx.EnumCombo("##cat2", ref SelectedCategory2, nullName: "所有類別");
-                ImGuiEx.Tooltip("類別");
+                ImGuiEx.EnumCombo("##cat2", ref SelectedCategory2, nullName: "所有类别");
+                ImGuiEx.Tooltip("类别");
             });
             foreach(var x in Utils.SharedGCExchangeListings)
             {
@@ -226,7 +226,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
         }
         if(ImGui.BeginPopup("Ex"))
         {
-            if(ImGui.Selectable("自動交換軍票武器與裝備，最佳化以獲取額外部隊點數。(FC Point)"))
+            if(ImGui.Selectable("自动交换军票武器与装备，最优化以获取额外部队点数。(FC Point)"))
             {
                 List<GCExchangeItem> items = [];
                 var qualifyingItems = Utils.SharedGCExchangeListings.Where(x => (x.Value.Category == GCExchangeCategoryTab.Weapons || x.Value.Category == GCExchangeCategoryTab.Armor) && x.Value.Data.GetRarity() == ItemRarity.Green).ToDictionary();
@@ -242,7 +242,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                     x.Quantity = Utils.SharedGCExchangeListings[x.ItemID].Data.IsUnique ? 1 : 999;
                 }
             }
-            ImGuiEx.Tooltip("選擇此選項將自動填入所有可交換的武器與裝備；交換的武器與裝備將會立即籌備至軍隊，以最大化產生部隊點數。這些物品將會被放在清單末端，且僅在沒有其他可購買物品時才會購買。");
+            ImGuiEx.Tooltip("选择此选项将自动填入所有可交换的武器与装备；交换的武器与装备将会立即筹备至军队，以最大化产生部队点数。这些物品将会被放在列表末端，且仅在没有其他可购买物品时才会购买。");
             if(ImGui.Selectable("加入所有缺少的物品"))
             {
                 foreach(var x in Utils.SharedGCExchangeListings)
@@ -253,42 +253,42 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                     }
                 }
             }
-            if(ImGui.Selectable("將數量重設為 0"))
+            if(ImGui.Selectable("将数量重置为 0"))
             {
                 plan.Items.Each(x => x.Quantity = 0);
                 plan.Items.Each(x => x.QuantitySingleTime = 0);
             }
-            if(ImGui.Selectable("移除數量為 0 的物品"))
+            if(ImGui.Selectable("移除数量为 0 的物品"))
             {
                 plan.Items.RemoveAll(x => x.Quantity == 0 && x.QuantitySingleTime == 0);
             }
-            if(ImGuiEx.Selectable("清除清單(按住 CTRL + 左鍵)", enabled: ImGuiEx.Ctrl))
+            if(ImGuiEx.Selectable("清除列表(按住 CTRL + 左键)", enabled: ImGuiEx.Ctrl))
             {
                 plan.Items.Clear();
             }
             ImGui.EndPopup();
         }
-        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.AngleDoubleDown, "Actions"))
+        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.AngleDoubleDown, "动作"))
         {
             ImGui.OpenPopup("Ex");
         }
         ImGui.SameLine();
-        ImGuiEx.InputWithRightButtonsArea("Fltr2", () =>
+        ImGuiEx.InputWithRightButtonsArea("筛选2", () =>
         {
             ImGui.InputTextWithHint("##filter", "搜索...", ref getFilter(), 100);
         }, () =>
         {
-            ImGui.Checkbox("僅顯示已選擇", ref onlySelected());
+            ImGui.Checkbox("仅显示已选择", ref onlySelected());
             ImGui.SameLine();
             ImGui.SetNextItemWidth(100f);
-            ImGuiEx.EnumCombo("##cat", ref SelectedCategory, nullName: "所有類別");
-            ImGuiEx.Tooltip("類別");
+            ImGuiEx.EnumCombo("##cat", ref SelectedCategory, nullName: "所有类别");
+            ImGuiEx.Tooltip("类别");
         });
 
 
 
         DragDrop.Begin();
-        if(ImGuiEx.BeginDefaultTable("GCDeliveryList", ["##dragDrop", "~Item", "GC", "Lv", "Price", "類別", "Keep", "One-Time", "##controls"]))
+        if(ImGuiEx.BeginDefaultTable("军队交付列表", ["##dragDrop", "~物品", "军队", "等级", "价格", "类别", "保留", "一次性", "##controls"]))
         {
             for(var i = 0; i < plan.Items.Count; i++)
             {
@@ -315,7 +315,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                     });
                 }
                 ImGui.SameLine(0, 1);
-                ImGuiEx.Tooltip("移至頂部");
+                ImGuiEx.Tooltip("移至顶部");
                 DragDrop.DrawButtonDummy(currentItem, plan.Items, i);
                 ImGui.TableNextColumn();
                 if(ThreadLoadImageHandler.TryGetIconTextureWrap(meta.Data.Icon, false, out var t))
@@ -333,7 +333,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                         if(trans) ImGui.PushStyleVar(ImGuiStyleVar.Alpha, 0.2f);
                         ImGui.Image(ctex.Handle, new(ImGui.GetFrameHeight()));
                         if(trans) ImGui.PopStyleVar();
-                        ImGuiEx.Tooltip($"{c}" + (trans ? " (unavailable)" : ""));
+                        ImGuiEx.Tooltip($"{c}" + (trans ? " (不可用)" : ""));
                         ImGui.SameLine(0, 1);
                     }
                 }
@@ -355,30 +355,30 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
                 ImGui.TableNextColumn();
                 if(currentItem.Data.Value.IsUnique)
                 {
-                    ImGuiEx.Checkbox("獨特的", ref currentItem.Quantity);
+                    ImGuiEx.Checkbox("独特的", ref currentItem.Quantity);
                 }
                 else
                 {
                     ImGui.SetNextItemWidth(100f.Scale());
                     ImGui.InputInt("##qty", ref currentItem.Quantity.ValidateRange(0, int.MaxValue), 0, 0);
                 }
-                ImGuiEx.Tooltip("選擇背包中要維持的數量");
+                ImGuiEx.Tooltip("选择背包中要维持的数量");
                 ImGui.TableNextColumn();
                 ImGui.SetNextItemWidth(100f.Scale());
                 ImGui.InputInt("##qtyonetime", ref currentItem.QuantitySingleTime.ValidateRange(0, currentItem.Data.Value.IsUnique ? 1 : int.MaxValue), 0, 0);
-                ImGuiEx.Tooltip("每次交換的數量：當使用此方案在任意角色上進行交換時，該數量將從此值中扣除。當數值降至 0 時，將自動恢復為\"維持\"數量。");
+                ImGuiEx.Tooltip("每次交换的数量：当使用此方案在任意角色上进行交换时，该数量将从此值中扣除。当数值降至 0 时，将自动恢复为\"维持\"数量。");
                 ImGui.TableNextColumn();
                 if(ImGuiEx.IconButton(FontAwesomeIcon.Clone))
                 {
                     plan.Items.Insert(i + 1, currentItem.JSONClone());
                 }
-                ImGuiEx.Tooltip("複製此列表");
+                ImGuiEx.Tooltip("复制此列表");
                 ImGui.SameLine(0, 1);
                 if(ImGuiEx.IconButton(FontAwesomeIcon.Trash))
                 {
                     new TickScheduler(() => plan.Items.Remove(currentItem));
                 }
-                ImGuiEx.Tooltip($"如果清單中存在多個相同的物品，則將其從清單中刪除；如果清單中只有一個相同的物品，則將其數量設為 0。");
+                ImGuiEx.Tooltip($"如果列表中存在多个相同的物品，则将其从列表中删除；如果列表中只有一个相同的物品，则将其数量设为 0。");
                 ImGui.PopID();
             }
             ImGui.EndTable();

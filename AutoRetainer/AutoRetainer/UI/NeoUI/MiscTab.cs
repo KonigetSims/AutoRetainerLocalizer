@@ -1,25 +1,25 @@
 namespace AutoRetainer.UI.NeoUI;
 public class MiscTab : NeoUIEntry
 {
-    public override string Path => "雜項";
+    public override string Path => "杂项";
 
     public override NuiBuilder Builder { get; init; } = new NuiBuilder()
-        .Section("統計信息")
-        .Checkbox($"記錄僱員探險統計", () => ref C.RecordStats)
+        .Section("统计信息")
+        .Checkbox($"记录雇员探险统计", () => ref C.RecordStats)
 
-        .Section("自動籌備稀有品")
-        .Checkbox("籌備稀有品完成時發送托盤通知（需要NotificationMaster插件）", () => ref C.GCHandinNotify)
+        .Section("自动筹备稀有品")
+        .Checkbox("筹备稀有品完成时发送托盘通知（需要NotificationMaster插件）", () => ref C.GCHandinNotify)
 
-        .Section("效能")
+        .Section("性能")
 
         .If(() => Utils.IsBusy)
         .Widget("", (x) => ImGui.BeginDisabled())
         .EndIf()
 
-        .Checkbox($"插件運轉時解除最小化時的FPS限制", () => ref C.UnlockFPS)
-        .Checkbox($"- 同時解除常規FPS限制", () => ref C.UnlockFPSUnlimited)
-        .Checkbox($"- 同時暫停ChillFrames插件", () => ref C.UnlockFPSChillFrames)
-        .Checkbox($"插件運行時提高FFXIV進程優先權", () => ref C.ManipulatePriority, "可能導致其他程式變慢")
+        .Checkbox($"插件运行时解除最小化时的FPS限制", () => ref C.UnlockFPS)
+        .Checkbox($"- 同时解除常规FPS限制", () => ref C.UnlockFPSUnlimited)
+        .Checkbox($"- 同时暂停ChillFrames插件", () => ref C.UnlockFPSChillFrames)
+        .Checkbox($"插件运行时提高FFXIV进程优先级", () => ref C.ManipulatePriority, "可能导致其他程序变慢")
 
         .If(() => Utils.IsBusy)
         .Widget("", (x) => ImGui.EndDisabled())

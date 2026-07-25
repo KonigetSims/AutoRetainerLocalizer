@@ -27,7 +27,7 @@ public static unsafe class TroubleshootingUI
 
         if(C.CutsceneSkipMode != AutoRetainerAPI.Configuration.CutsceneSkipMode.Never)
         {
-            Info($"跳过旅馆登录动画模块已设置为 {C.CutsceneSkipMode}. 旅馆登录动画将由 AutoRetainer 跳过");
+            Info($"旅馆过场动画跳过模块设置为 {C.CutsceneSkipMode}。AutoRetainer 将跳过旅馆过场动画。");
         }
 
         if(Data == null)
@@ -37,12 +37,12 @@ public static unsafe class TroubleshootingUI
 
         if(C.IgnoreGCRankCheck)
         {
-            Error("已启用忽略军队等级检查。若要正常使用插件，请将其禁用。（/ays set IgnoreGCRankCheck false）");
+            Error("已启用忽略军衔检查。请禁用以使插件正常运行。(/ays set IgnoreGCRankCheck false)");
         }
 
         if(!Svc.ClientState.ClientLanguage.EqualsAny(ClientLanguage.Japanese, ClientLanguage.German, ClientLanguage.French, ClientLanguage.English))
         {
-            Error($"检测到非国际服客户端。 AutoRetainer未在其他最终幻想14客户端上进行测试。部分或全部功能可能无法正常运作。此外，请注意，ottercorp 的中国 Dalamud 分支会在未经您同意的情况下收集有关您的电脑、角色、所用插件和 Dalamud 配置的遥测数据，并且您无法选择退出。");
+            Error($"检测到非国际服客户端。AutoRetainer未在其他最终幻想14客户端上进行测试。部分或全部功能可能无法正常运作。此外，请注意，ottercorp 的中国 Dalamud 分支会在未经您同意的情况下收集有关您的电脑、角色、所用插件和 Dalamud 配置的遥测数据，并且您无法选择退出。");
         }
 
         if(C.DontLogout)
@@ -67,11 +67,11 @@ public static unsafe class TroubleshootingUI
             }
             if(warnSub && C.FullAutoGCDeliveryInventory < 50)
             {
-                Warning($"启用远航探索模块后，多角色模式下触发筹备的剩余背包格数设置为 {C.FullAutoGCDeliveryInventory} 。建议设置为至少 50 以免背包物品易出问题");
+                Warning($"在多角色模式下，专家交付的空闲背包栏位触发值设置为 {C.FullAutoGCDeliveryInventory}，而潜艇模块已启用。建议至少设置为 50 以避免背包溢出问题。");
             }
             if(C.FullAutoGCDeliveryInventory < maxRetainersWhenGcDelivery * 5)
             {
-                Warning($"部分多角色模式的人物启用了 {maxRetainersWhenGcDelivery} 个雇员， 在多角色模式下触发筹备的剩余背包格数设置为 {C.FullAutoGCDeliveryInventory} 。强烈建议设置为 {maxRetainersWhenGcDelivery * 5} (每个雇员五格)");
+                Warning($"您的一些多角色模式启用的角色有 {maxRetainersWhenGcDelivery} 个雇员已启用，而多角色模式专家交付的空闲背包栏位触发值设置为 {C.FullAutoGCDeliveryInventory}。强烈建议您将其设置为至少 {C.FullAutoGCDeliveryInventory * maxRetainersWhenGcDelivery}（每个雇员 5 个栏位）。");
             }
         }
 
@@ -221,7 +221,7 @@ public static unsafe class TroubleshootingUI
 
         if(C.MultiModeType != AutoRetainerAPI.Configuration.MultiModeType.Everything)
         {
-            Warning($"您的多角色模式类型设置为 {C.MultiModeType} ；这将限制AutoRetainer执行的功能。");
+            Warning($"您的多角色模式类型设置为 {C.MultiModeType}；这将限制AutoRetainer执行的功能。");
         }
 
         if(C.OfflineData.Any(x => x.MultiWaitForAllDeployables))

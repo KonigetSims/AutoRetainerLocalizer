@@ -31,7 +31,7 @@ internal unsafe class LoginOverlay : Window
             Utils.DrawLifestreamWarning("多角色模式");
         }
         var num = 1;
-        ref var sacc = ref Ref<int>.Get("ServAcc", -1);
+        ref var sacc = ref Ref<int>.Get("服务账号", -1);
         int[] userServiceAccounts = [-1, .. C.OfflineData.Select(x => x.ServiceAccount).Distinct().Order()];
         if(!C.NoCharaSearch)
         {
@@ -43,7 +43,7 @@ internal unsafe class LoginOverlay : Window
                 {
                     ImGui.SameLine();
                     ImGui.SetNextItemWidth(100f);
-                    ImGuiEx.Combo("##sacc", ref Ref<int>.Get("ServAcc", -1), userServiceAccounts, names: userServiceAccounts.ToDictionary(x => x, x => x == -1 ? "所有伺服帳號" : $"服務帳號 {x + 1}"));
+                    ImGuiEx.Combo("##sacc", ref Ref<int>.Get("服务账号", -1), userServiceAccounts, names: userServiceAccounts.ToDictionary(x => x, x => x == -1 ? "所有服务账号" : $"服务账号 {x + 1}"));
                 }
             });
         }
@@ -70,7 +70,7 @@ internal unsafe class LoginOverlay : Window
         }
         if(cnt % C.NumLoginOverlayCols.ValidateRange(1, 10) != 0) ImGui.NewLine();
             //ImGui.PopFont();
-            ImGuiEx.LineCentered("LoginCenter", delegate
+            ImGuiEx.LineCentered("登录中心", delegate
         {
             if(ImGui.Checkbox("多角色模式", ref MultiMode.Enabled))
             {

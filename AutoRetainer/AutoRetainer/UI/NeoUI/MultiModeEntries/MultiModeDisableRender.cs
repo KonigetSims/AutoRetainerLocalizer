@@ -10,7 +10,7 @@ public class MultiModeDisableRender : NeoUIEntry
 
     public override NuiBuilder Builder => new NuiBuilder()
         .Section("禁用渲染")
-        .Checkbox("多角色模式下禁用渲染", () => ref C.MultiDisableRender, "多角色模式下不再渲染游戏世界，以降低资源占用")
-        .Checkbox("仅在夜间模式启用", () => ref C.MultiDisableRenderNightModeOnly)
-        .Checkbox("仅在游戏窗口非活动时", () => ref C.MultiDisableRenderOnlyInactive);
+        .Checkbox("在多角色模式下禁用渲染", () => ref C.MultiDisableRender, "在多角色模式下禁用世界渲染。")
+        .Checkbox("仅在夜间模式下", () => ref C.MultiDisableRenderNightModeOnly)
+        .Checkbox("仅在窗口非活动时", () => ref C.MultiDisableRenderOnlyInactive);
 }

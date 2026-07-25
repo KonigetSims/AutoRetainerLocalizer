@@ -28,7 +28,7 @@ public sealed class VenturePlanner : Window
     public override void Draw()
     {
         ImGuiEx.SetNextItemFullWidth();
-        if(ImGui.BeginCombo("##selectRet", $"{Censor.Character(SelectedCharacter.Name, SelectedCharacter.World)} - {Censor.Retainer(SelectedRetainer.Name)} - {SelectedRetainer.Level} {ExcelJobHelper.GetJobNameById(SelectedRetainer.Job)}" ?? "選擇僱員...", ImGuiComboFlags.HeightLarge))
+        if(ImGui.BeginCombo("##selectRet", $"{Censor.Character(SelectedCharacter.Name, SelectedCharacter.World)} - {Censor.Retainer(SelectedRetainer.Name)} - {SelectedRetainer.Level} {ExcelJobHelper.GetJobNameById(SelectedRetainer.Job)}" ?? "选择雇员...", ImGuiComboFlags.HeightLarge))
         {
             foreach(var x in C.OfflineData.OrderBy(x => !C.NoCurrentCharaOnTop && x.CID == Player.CID ? 0 : 1))
             {
@@ -136,7 +136,7 @@ public sealed class VenturePlanner : Window
                 ImGui.NextColumn();
 
 
-                if(ImGui.Checkbox("啟用規劃器", ref adata.EnablePlanner))
+                if(ImGui.Checkbox("启用规划器", ref adata.EnablePlanner))
                 {
                     if(adata.EnablePlanner)
                     {
@@ -147,7 +147,7 @@ public sealed class VenturePlanner : Window
                 if(C.SavedPlans.Count > 0)
                 {
                     ImGuiEx.SetNextItemFullWidth();
-                    if(ImGui.BeginCombo("##load", "讀取已儲存的計畫...", ImGuiComboFlags.HeightLarge))
+                    if(ImGui.BeginCombo("##load", "读取已保存的计划...", ImGuiComboFlags.HeightLarge))
                     {
                         int? toRem = null;
                         for(var i = 0; i < C.SavedPlans.Count; i++)
@@ -165,7 +165,7 @@ public sealed class VenturePlanner : Window
                             }
                             if(ImGui.BeginPopup($"Context"))
                             {
-                                if(ImGui.Selectable("刪除計畫"))
+                                if(ImGui.Selectable("删除计划"))
                                 {
                                     toRem = i;
                                 }
@@ -186,16 +186,16 @@ public sealed class VenturePlanner : Window
                 if(adata.VenturePlan.List.Count > 0)
                 {
                     //ImGui.Separator();
-                    ImGuiEx.TextV("當計畫完成時:");
+                    ImGuiEx.TextV("当计划完成时:");
                     ImGui.SameLine();
                     ImGuiEx.SetNextItemFullWidth();
                     ImGuiEx.EnumCombo("##cBeh", ref adata.VenturePlan.PlanCompleteBehavior);
                     //ImGui.Separator();
                     var overwrite = C.SavedPlans.Any(x => x.Name == adata.VenturePlan.Name);
-                    ImGuiEx.InputWithRightButtonsArea("儲存計畫", delegate
+                    ImGuiEx.InputWithRightButtonsArea("保存计划", delegate
                     {
                         if(overwrite) ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.DalamudYellow);
-                        ImGui.InputTextWithHint("##name", "輸入計畫名稱...", ref adata.VenturePlan.Name, 50);
+                        ImGui.InputTextWithHint("##name", "输入计划名称...", ref adata.VenturePlan.Name, 50);
                         if(overwrite) ImGui.PopStyleColor();
                     }, delegate
                     {
@@ -206,18 +206,18 @@ public sealed class VenturePlanner : Window
                                 C.SavedPlans.RemoveAll(x => x.Name == adata.VenturePlan.Name);
                             }
                             C.SavedPlans.Add(adata.VenturePlan.JSONClone());
-                            Notify.Success($"計畫 {adata.VenturePlan.Name} 已儲存!");
+                            Notify.Success($"计划 {adata.VenturePlan.Name} 已保存!");
                         }
-                        ImGuiEx.Tooltip(overwrite ? "覆蓋現有的探險計畫" : $"儲存探險計畫");
+                        ImGuiEx.Tooltip(overwrite ? "覆盖现有的探险计划" : $"保存探险计划");
                     });
                 }
 
                 ImGuiEx.SetNextItemFullWidth();
-                if(ImGui.BeginCombo("##addVenture", "新增探險任務...", ImGuiComboFlags.HeightLarge))
+                if(ImGui.BeginCombo("##addVenture", "新增探险任务...", ImGuiComboFlags.HeightLarge))
                 {
                     ImGuiEx.SetNextItemFullWidth();
-                    ImGui.InputTextWithHint("##search", "篩選...", ref search, 100);
-                    ImGuiEx.TextV($"等級範圍:");
+                    ImGui.InputTextWithHint("##search", "筛选...", ref search, 100);
+                    ImGuiEx.TextV($"等级范围:");
                     ImGui.SameLine();
                     ImGuiEx.SetNextItemWidthScaled(50f);
                     ImGui.DragInt("##minL", ref minLevel, 1, 1, Player.MaxLevel);
@@ -226,7 +226,7 @@ public sealed class VenturePlanner : Window
                     ImGui.SameLine();
                     ImGuiEx.SetNextItemWidthScaled(50f);
                     ImGui.DragInt("##maxL", ref maxLevel, 1, 1, Player.MaxLevel);
-                    ImGuiEx.TextV($"不可用的探險任務:");
+                    ImGuiEx.TextV($"不可用的探险任务:");
                     ImGui.SameLine();
                     ImGuiEx.SetNextItemFullWidth();
                     ImGuiEx.EnumCombo("##unavail", ref C.UnavailableVentureDisplay);
@@ -283,7 +283,7 @@ public sealed class VenturePlanner : Window
                             }
                         }
                         ImGui.PushStyleVar(ImGuiStyleVar.ButtonTextAlign, Vector2.Zero);
-                        if(ImGui.Button($"{Lang.CharDice}    籌備物資", ImGuiHelpers.GetButtonSize("A") with { X = ImGui.GetContentRegionAvail().X }))
+                        if(ImGui.Button($"{Lang.CharDice}    筹备物资", ImGuiHelpers.GetButtonSize("A") with { X = ImGui.GetContentRegionAvail().X }))
                         {
                             adata.VenturePlan.List.Add(new(VentureUtils.QuickExplorationID));
                             adata.VenturePlanIndex = 0;
@@ -307,15 +307,15 @@ public sealed class VenturePlanner : Window
                         adata.VenturePlanIndex = 0;
                     }
                     ImGui.SameLine();
-                    ImGuiEx.Tooltip("取消此計劃的剩餘探險並重新開始");
+                    ImGuiEx.Tooltip("取消此计划的剩余探险并重新开始");
                     ImGui.ProgressBar(pct, new Vector2(ImGui.GetContentRegionAvail().X, ImGuiHelpers.GetButtonSize("X").Y));
                 }
 
                 if(C.Verbose)
                 {
-                    if(ImGui.CollapsingHeader("Debug"))
+                    if(ImGui.CollapsingHeader("调试"))
                     {
-                        ImGuiEx.InputUint("Index", ref adata.VenturePlanIndex);
+                        ImGuiEx.InputUint("索引", ref adata.VenturePlanIndex);
                     }
                 }
 
@@ -323,7 +323,7 @@ public sealed class VenturePlanner : Window
             }
             else
             {
-                ImGuiEx.TextWrapped($"此僱員的探險計劃已與其他僱員的探險計劃共享");
+                ImGuiEx.TextWrapped($"此雇员的探险计划已与其他雇员的探险计划共享");
             }
         }
 

@@ -23,7 +23,7 @@ internal unsafe class RetainerListOverlay : Window
     public override bool DrawConditions()
     {
         if(!C.UIBar) return false;
-        if(Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.OccupiedSummoningBell] && TryGetAddonByName<AtkUnitBase>("RetainerList", out var addon) && IsAddonReady(addon))
+        if(Svc.Condition[Dalamud.Game.ClientState.Conditions.ConditionFlag.OccupiedSummoningBell] && TryGetAddonByName<AtkUnitBase>("雇员列表", out var addon) && IsAddonReady(addon))
         {
             Position = new(addon->X, addon->Y - height);
             return true;
@@ -44,7 +44,7 @@ internal unsafe class RetainerListOverlay : Window
         {
             ImGui.BeginDisabled();
         }
-        if(ImGui.Checkbox("啟用 AutoRetainer", ref e))
+        if(ImGui.Checkbox("启用 AutoRetainer", ref e))
         {
             P.WasEnabled = false;
             if(e)
@@ -59,12 +59,12 @@ internal unsafe class RetainerListOverlay : Window
         if(disabled)
         {
             ImGui.EndDisabled();
-            ImGuiComponents.HelpMarker($"多角色模式正控制此選項。按住 CTRL 可強制覆蓋。");
+            ImGuiComponents.HelpMarker($"多角色模式正控制此选项。按住 CTRL 可强制覆盖。");
         }
         if(P.WasEnabled)
         {
             ImGui.SameLine();
-            ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudGrey, ImGuiColors.DalamudGrey3, 500), $"已暫停");
+            ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudGrey, ImGuiColors.DalamudGrey3, 500), $"已暂停");
         }
         if(C.MultiModeUIBar)
         {
@@ -83,15 +83,15 @@ internal unsafe class RetainerListOverlay : Window
 
         ImGui.SameLine();
 
-        if(ImGuiEx.IconButton($"{Lang.IconSettings}##Open plugin interface"))
+        if(ImGuiEx.IconButton($"{Lang.IconSettings}##打开插件界面"))
         {
             Svc.Commands.ProcessCommand("/ays");
         }
-        ImGuiEx.Tooltip("開啟插件設定");
+        ImGuiEx.Tooltip("打开插件设置");
         if(!P.TaskManager.IsBusy)
         {
             ImGui.SameLine();
-            if(ImGuiEx.IconButton($"{Lang.IconDuplicate}##Entrust all duplicates"))
+            if(ImGuiEx.IconButton($"{Lang.IconDuplicate}##存放所有重复物品"))
             {
                 for(var i = 0; i < GameRetainerManager.Count; i++)
                 {
@@ -112,7 +112,7 @@ internal unsafe class RetainerListOverlay : Window
                         }
                         else
                         {
-                            Notify.Error($"找不到僱員 {ret.Name} 的存放計畫");
+                            Notify.Error($"找不到雇员 {ret.Name} 的存放计划");
                         }
 
                     }
@@ -121,7 +121,7 @@ internal unsafe class RetainerListOverlay : Window
             ImGuiEx.Tooltip("快速存放");
 
             ImGui.SameLine();
-            if(ImGuiEx.IconButton($"{FontAwesomeIcon.ArrowRightToBracket.ToIconString()}##EntrustManually"))
+            if(ImGuiEx.IconButton($"{FontAwesomeIcon.ArrowRightToBracket.ToIconString()}##手动委托"))
             {
                 ImGui.OpenPopup("EntrustManually");
             }
@@ -155,10 +155,10 @@ internal unsafe class RetainerListOverlay : Window
                 }
                 ImGui.EndPopup();
             }
-            ImGuiEx.Tooltip("Run a specific entrust plan");
+            ImGuiEx.Tooltip("运行特定的委托计划");
 
             ImGui.SameLine();
-            if(ImGuiEx.IconButton($"{FontAwesomeIcon.ArrowRightFromBracket.ToIconString()}##ReverseEntrust"))
+            if(ImGuiEx.IconButton($"{FontAwesomeIcon.ArrowRightFromBracket.ToIconString()}##反向委托"))
             {
                 ImGui.OpenPopup("ReverseEntrust");
             }
@@ -192,10 +192,10 @@ internal unsafe class RetainerListOverlay : Window
                 }
                 ImGui.EndPopup();
             }
-            ImGuiEx.Tooltip("Reverse run a specific entrust plan (withdraw items according to entrust plan from retainers)");
+            ImGuiEx.Tooltip("反向运行特定的委托计划（根据委托计划从雇员处提取物品）");
 
             ImGui.SameLine();
-            if(ImGuiEx.IconButton($"{Lang.IconGil}##WithdrawGil"))
+            if(ImGuiEx.IconButton($"{Lang.IconGil}##提取金币"))
             {
                 for(var i = 0; i < GameRetainerManager.Count; i++)
                 {
@@ -213,11 +213,11 @@ internal unsafe class RetainerListOverlay : Window
                     }
                 }
             }
-            ImGuiEx.Tooltip("快速提取金幣");
+            ImGuiEx.Tooltip("快速提取金币");
 
             {
                 ImGui.SameLine();
-                if(ImGuiEx.IconButton($"{Lang.IconFire}##vendoritems"))
+                if(ImGuiEx.IconButton($"{Lang.IconFire}##出售物品"))
                 {
                     Utils.EnqueueVendorItemsByRetainer();
                 }
@@ -228,7 +228,7 @@ internal unsafe class RetainerListOverlay : Window
                 ImGuiEx.Tooltip("快速出售物品");
                 if(ImGui.BeginPopup("QuickVendorPopup"))
                 {
-                    if(ImGui.Selectable("從籌備物資清單中出售物品"))
+                    if(ImGui.Selectable("从筹备物资列表中出售物品"))
                     {
                         for(var i = 0; i < GameRetainerManager.Count; i++)
                         {

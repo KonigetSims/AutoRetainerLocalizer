@@ -23,15 +23,15 @@ public class ExpertTab : NeoUIEntry
         .InputInt(150f, "AutoRetainer尝试解除卡死前的超时时间(秒)", () => ref C.BailoutTimeout)
 
         .Section("设置")
-        .Checkbox("Allow operating on retainers without a job", () => ref C.AllowUnemployed)
-        .Widget("跳过旅馆登录动画", text =>
+        .Checkbox("允许操作没有职业的雇员", () => ref C.AllowUnemployed)
+        .Widget("跳过旅馆登录过场动画", text =>
         {
             ImGui.SetNextItemWidth(200);
             if(ImGuiEx.EnumCombo(text, ref C.CutsceneSkipMode))
             {
                 S.InnCutsceneSkip.RefreshAccordingToConfig();
             }
-            ImGuiEx.HelpMarker("跳过登录动画可被服务器检测到，会增加被封禁几率", EColor.RedBright, FontAwesomeIcon.ExclamationTriangle.ToIconString());
+            ImGuiEx.HelpMarker("跳过过场动画可在服务器端检测到，会增加封号风险", EColor.RedBright, FontAwesomeIcon.ExclamationTriangle.ToIconString());
         })
         .Checkbox($"禁用排序和折叠/展开功能", () => ref C.NoCurrentCharaOnTop)
         .Checkbox($"在插件UI栏显示多角色模式复选框", () => ref C.MultiModeUIBar)

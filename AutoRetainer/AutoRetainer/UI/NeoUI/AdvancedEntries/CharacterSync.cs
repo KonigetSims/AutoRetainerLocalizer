@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AutoRetainer.UI.NeoUI.AdvancedEntries;
 public unsafe sealed class CharacterSync : NeoUIEntry
 {
-    public override string Path => "進階/角色同步";
+    public override string Path => "进阶/角色同步";
 
     private List<string> ToDelete = [];
 
@@ -15,7 +15,7 @@ public unsafe sealed class CharacterSync : NeoUIEntry
     {
         if(ToDelete.Count > 0)
         {
-            if(ImGuiEx.BeginDefaultTable(["名稱", "##control"]))
+            if(ImGuiEx.BeginDefaultTable(["名称", "##control"]))
             {
                 foreach(var item in ToDelete)
                 {
@@ -26,7 +26,7 @@ public unsafe sealed class CharacterSync : NeoUIEntry
                         ImGui.TableNextColumn();
                         ImGuiEx.Text($"{ocd.NameWithWorld}");
                         ImGui.TableNextColumn();
-                        if(ImGui.SmallButton("從列表中排除"))
+                        if(ImGui.SmallButton("从列表中排除"))
                         {
                             new TickScheduler(() => ToDelete.Remove(item));
                         }
@@ -38,11 +38,11 @@ public unsafe sealed class CharacterSync : NeoUIEntry
                 }
                 ImGui.EndTable();
             }
-            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Trash, "從 AutoRetainer 中刪除列表中的角色", enabled: ImGuiEx.Ctrl))
+            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Trash, "从 AutoRetainer 中删除列表中的角色", enabled: ImGuiEx.Ctrl))
             {
                 C.OfflineData.RemoveAll(x => ToDelete.Contains(x.NameWithWorld));
             }
-            ImGuiEx.Tooltip("按住 CTRL 並點擊");
+            ImGuiEx.Tooltip("按住 CTRL 并点击");
             if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Ban, "取消"))
             {
                 ToDelete.Clear();
@@ -50,27 +50,27 @@ public unsafe sealed class CharacterSync : NeoUIEntry
             return;
         }
 
-        ImGuiEx.TextWrapped($"一鍵刪除已不存在的角色資料");
+        ImGuiEx.TextWrapped($"一键删除已不存在的角色数据");
         var jbInstalled = Svc.PluginInterface.InstalledPlugins.Any(x => x.InternalName == "JustBackup" && x.IsLoaded);
         if(!jbInstalled)
         {
-            ImGuiEx.TextWrapped(EColor.RedBright, "若要繼續，你需要安裝 JustBackup 插件");
-            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.WindowMaximize, "開啟插件安裝器"))
+            ImGuiEx.TextWrapped(EColor.RedBright, "若要继续，你需要安装 JustBackup 插件");
+            if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.WindowMaximize, "打开插件安装器"))
             {
                 Svc.PluginInterface.OpenPluginInstallerTo(PluginInstallerOpenKind.AllPlugins, "JustBackup");
             }
             return;
         }
         ImGuiEx.TextWrapped($"""
-            1. 輸入 /justbackup 建立備份，確保成功並存放在安全的位置。\n2. 開啟 FFXIV Lodestone 官網的角色名單
+            1. 输入 /justbackup 创建备份，确保成功并保存在安全的位置。\n2. 打开 FFXIV Lodestone 官网的角色名单
             """);
-        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.ExternalLinkSquareAlt, "立即開啟角色名單"))
+        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.ExternalLinkSquareAlt, "立即打开角色名单"))
         {
             ShellStart("https://eu.finalfantasyxiv.com/lodestone/account/select_character/");
         }
-        ImGuiEx.TextWrapped($"3. 確保你登入了正確的帳號，並按下 CTRL+A 全選後 CTRL+C 複製整個頁面內容。");
-        ImGuiEx.TextWrapped($"4. 完成後，點擊以下按鈕：");
-        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Paste, "準備角色資料清理"))
+        ImGuiEx.TextWrapped($"3. 确保你登录了正确的账号，并按下 CTRL+A 全选后 CTRL+C 复制整个页面内容。");
+        ImGuiEx.TextWrapped($"4. 完成后，点击以下按钮：");
+        if(ImGuiEx.IconButtonWithText(FontAwesomeIcon.Paste, "准备角色数据清理"))
         {
             Parse();
         }

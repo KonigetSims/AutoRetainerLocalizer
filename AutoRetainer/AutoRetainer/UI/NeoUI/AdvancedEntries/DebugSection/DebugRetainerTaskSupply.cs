@@ -8,7 +8,7 @@ public unsafe class DebugRetainerTaskSupply : DebugSectionBase
 {
     public override void Draw()
     {
-        if(TryGetAddonByName<AtkUnitBase>("RetainerTaskSupply", out var addon) && addon->IsReady())
+        if(TryGetAddonByName<AtkUnitBase>("雇员任务补给", out var addon) && addon->IsReady())
         {
             for(var i = 0; i < addon->AtkValues[107].UInt; i++)
             {
@@ -19,6 +19,6 @@ public unsafe class DebugRetainerTaskSupply : DebugSectionBase
         }
         ref var vid = ref Ref<int>.Get("DTRSID");
         ImGui.InputInt("vid", ref vid);
-        if(ImGui.Button("OpenAssignVentureWindow")) DuoLog.Information($"{TaskAssignHuntingVenture.OpenAssignVentureWindow((uint)vid)}");
+        if(ImGui.Button("打开分配探险窗口")) DuoLog.Information($"{TaskAssignHuntingVenture.OpenAssignVentureWindow((uint)vid)}");
     }
 }
