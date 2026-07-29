@@ -87,6 +87,7 @@ public sealed class FcDataManager
                 ImGui.PushFont(UiBuilder.IconFont);
                 ImGuiEx.ButtonCheckbox($"##FC{x.Key}", ref x.Value.GilCountsTowardsChara, EColor.Green);
                 ImGui.PopFont();
+                ImGuiEx.DragDropRepopulate("GCTC", x.Value.GilCountsTowardsChara, ref x.Value.GilCountsTowardsChara);
                 ImGuiEx.Tooltip("标记此部队为钱包部队。金币显示标签页将包含此部队的金币。");
                 ImGui.SameLine();
                 if(ImGuiEx.IconButton(FontAwesomeIcon.Trash, $"{x.Key}删除", enabled: ImGuiEx.Ctrl))

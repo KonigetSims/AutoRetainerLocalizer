@@ -1,4 +1,4 @@
-{
+﻿{
   "Lock window position and size": "锁定窗口位置和大小",
   "Abort {0} tasks": "中止 {0} 个流程",
   "Retainers": "雇员管理",
@@ -1453,5 +1453,13 @@
   "{0}##ReverseEntrust": "{0}##反向委托",
   "Reverse run a specific entrust plan (withdraw items according to entrust plan from retainers)": "反向运行特定的委托计划（根据委托计划从雇员处提取物品）",
   "Allow operating on retainers without a job": "允许操作没有职业的雇员",
-  "Disable render": "禁用渲染"
+  "Disable render": "禁用渲染",
+  "SubEn": "SubEn",
+  "GCTC": "GCTC",
+  "Move stuck detection": "Move stuck detection",
+  "\nLastRefreshTime {0} ({1})\nLastPosition {2}\nExtendIsMoving {3}": "\nLastRefreshTime {0} ({1})\nLastPosition {2}\nExtendIsMoving {3}",
+  "ExtendIsMoving": "ExtendIsMoving",
+  "AddonOpenedAt": "AddonOpenedAt",
+  "{0}: {1} ({2} ago)": "{0}: {1} ({2} ago)",
+  "-1 min##{0}": "-1 min##{0}"
 }
