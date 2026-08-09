@@ -139,7 +139,7 @@ public sealed unsafe class ExchangeLists : InventoryManagementBase
             if(charas.Length > 0)
             {
                 ImGuiEx.Text($"共有 {charas.Length} 个角色使用");
-                ImGuiEx.Tooltip($"{charas.Select(x => x.NameWithWorldCensored)}");
+                ImGuiEx.Tooltip($"{charas.Select(x => x.NameWithWorldCensored).Print("\n")}");
             }
             else
             {

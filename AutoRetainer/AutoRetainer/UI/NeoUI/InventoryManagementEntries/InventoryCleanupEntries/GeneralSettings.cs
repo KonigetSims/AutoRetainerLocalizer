@@ -39,6 +39,7 @@ public class GeneralSettings : InventoryManagementBase
             .Checkbox($"启用右键菜单集成", () => ref InventoryCleanupCommon.SelectedPlan.IMEnableContextMenu)
             .Checkbox($"允许从装备库出售/丢弃物品", () => ref InventoryCleanupCommon.SelectedPlan.AllowSellFromArmory)
             .Checkbox("在多角色模式下将符合条件的物品交付到衣柜", () => ref InventoryCleanupCommon.SelectedPlan.EnableCabinetAutoDelivery, "不在衣柜中的物品将被交付到衣柜中。符合条件的物品也将被排除在被丢弃、分解、委托给雇员或交付给军队之外（仅在运行多角色模式时）。这将在多角色模式专家交付之前触发。")
+            .Checkbox("Deliver eligible items into glamour dresser while in Multi Mode (requires Glamour log plugin)", () => ref InventoryCleanupCommon.SelectedPlan.EnableMirageAutoDelivery)
             .Checkbox($"演示模式", () => ref InventoryCleanupCommon.SelectedPlan.IMDry, "不实际出售/丢弃物品，仅在聊天窗口显示哪些物品将被处理")
             ;
     }

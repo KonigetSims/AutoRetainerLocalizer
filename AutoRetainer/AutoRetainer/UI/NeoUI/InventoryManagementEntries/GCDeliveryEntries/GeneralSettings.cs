@@ -36,7 +36,35 @@ public sealed unsafe class GeneralSettings : InventoryManagementBase
         .InputInt(150f, "触发筹备的剩余探险币数量 (小于或等于)", () => ref C.FullAutoGCDeliveryDeliverOnVentureLessThan)
         .Unindent()
         .Checkbox("优先使用军票加成票券，如果可用的话", () => ref C.FullAutoGCDeliveryUseBuffItem)
+        .Widget(() =>
+        {
+            if(C.FullAutoGCDeliveryUseBuffItem)
+            {
+                ImGui.Indent();
+                if(Data != null)
+                {
+                    ImGuiEx.Checkbox($"Exclude {Data.NameWithWorldCensored}##item", ref Data.NoItemBuffUse);
+                }
+                var cnt = C.OfflineData.Count(x => x.NoItemBuffUse);
+                ImGuiEx.Text($"{(cnt > 0 ? $"{cnt} character(s) are excluded from buff item usage. " : "")} Navigate to \"Functions, Exclusions, Order\" section to exclude a character.");
+                ImGui.Unindent();
+            }
+        })
         .Checkbox("优先使用部队军票加成BUFF，如果可用的话", () => ref C.FullAutoGCDeliveryUseBuffFCAction)
+        .Widget(() =>
+        {
+            if(C.FullAutoGCDeliveryUseBuffFCAction)
+            {
+                ImGui.Indent();
+                if(Data != null)
+                {
+                    ImGuiEx.Checkbox($"Exclude {Data.NameWithWorldCensored}", ref Data.NoFcBuffUse);
+                }
+                var cnt = C.OfflineData.Count(x => x.NoFcBuffUse);
+                ImGuiEx.Text($"{(cnt > 0 ? $"{cnt} character(s) are excluded from buff item usage. " : "")} Navigate to \"Functions, Exclusions, Order\" section to exclude a character.");
+                ImGui.Unindent();
+            }
+        })
         .Checkbox("筹备交换后传送回房屋/旅馆", () => ref C.TeleportAfterGCExchange)
         .Indent()
         .Checkbox("仅在多角色模式启动时", () => ref C.TeleportAfterGCExchangeMulti)
